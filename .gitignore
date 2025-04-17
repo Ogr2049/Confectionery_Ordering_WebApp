@@ -1,0 +1,42 @@
+# Standart ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+.env
+settings/local.py
+
+
+# Virtual Environment
+virt/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.idea/
+
+
+
+# My specific ingores:
+*.xlsx
+/media/
+**/img/*
+
+git
+# Python
+__pycache__/
+*/__pycache__/
+.pyc
+*.py[cod]
+*.pyc
+
+# For the future:
+*.dump
+*.exe
+*.log
