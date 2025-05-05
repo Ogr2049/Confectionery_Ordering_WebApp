@@ -9,7 +9,6 @@ class Category(MPTTModel):
     title = models.CharField(max_length=150,verbose_name='Название')
     slug = models.SlugField(max_length=200,blank=True,verbose_name='URL')
     parent = TreeForeignKey('self',on_delete=models.CASCADE,null=True,blank=True,related_name='children',db_index=True,verbose_name='Родитель')
-    image = models.ImageField(upload_to='images/',verbose_name='Изображение',null=True,blank=True)
     show_main = models.BooleanField(verbose_name="Разместить на главной", default=False)
 
     class MPTTMeta:
@@ -35,7 +34,7 @@ class Product(models.Model):
     description = models.TextField(blank=True,null=True,verbose_name='Описание')
     image = models.ImageField(blank=True,null=True,verbose_name='Изображение')
     price = models.FloatField(verbose_name='Цена', blank=True, null=True)
-    weight = models.FloatField(verbose_name="Вес", blank=True, null=True)
+    weight = models.CharField(verbose_name="Вес", blank=True, null=True, max_length=100)
     composition = models.TextField(verbose_name="Состав", blank=True, null=True)
 
     category = models.ForeignKey(to=Category,on_delete=models.CASCADE,verbose_name='Категория', blank=True, null=True, related_name="products")
