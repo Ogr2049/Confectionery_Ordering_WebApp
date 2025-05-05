@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+{% load main_tags %}
+{% block title %}Pie&Cake - Мои заказы{% endblock title %}
+
+{% block content %}
+<section id="breadcrumbs">
+		<div class="wrp">
+			<ul class="breadcrumbs">
+				<li>
+					<a href="{% url 'index' %}" class="light">Главная</a>
+				</li>
+				<li>
+					<a href="{% url 'profile' %}" class="light">Профиль</a>
+				</li>
+				<li>
+					<span class="light">Мои заказы</span>
+				</li>
+			</ul>
+		</div>
+	</section>
+
+	<section id="cabinet">
+		<div class="wrp">
+			<div class="cabinet-side">
+				<p class="h2">Личные данные</p>
+				<div class="list-cabinet">
+					<div>
+						<a href="{% url 'profile' %}">Личный кабинет</a>
+					</div>
+					<div>
+						<a href="{% url 'orders' %}" class="active">История заказов</a>
+					</div>
+					<div>
+						<a href="{% url 'logout' %}">Выход</a>
+					</div>
+				</div>
+			</div>
+			<div class="cabinet-main" style="{% if not request.user.orders.all %}    background: inherit;
+    border: none;{% endif %}">
+				{% if request.user.orders.all %}
+					<!-- РЕАЛИЗОВАТЬ ВЫВОД ЗАКАЗЫ -->
+                {% else %}
+				     <p class="h2">Заказы отсутствуют</p>
+				{% endif %}
+			</div>
+		</div>
+	</section>
+{% endblock content %}
