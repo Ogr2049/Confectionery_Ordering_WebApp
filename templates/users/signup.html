@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+{% load static %}
+{% load main_tags %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>
+		Pie&Cake - Регистрация
+	</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Forum&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href='{% static "css/styles.css"%}'>
+	<link rel="stylesheet" href='{% static "css/media.css"%}'>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+</head>
+<body>
+
+	<section class="header-login">
+                <a href="/">
+		<img src="{% static 'img/logo-cake.svg' %}" alt="Cake logo">
+				</a>
+	</section>
+
+	<section class="main-login">
+		<p class="h2" style="text-align: center;">Регистрация кабинета</p>
+		<div>
+                        {% for field in form %}
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                <p style="text-align: center; margin-bottom: 10px; color: red;">{{error}}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+				<form method="post" enctype="multipart/form-data">{% csrf_token %}
+				<div class="input-label">
+					<p>ФИО</p>
+					<input type="text" class="input required" name="full_name" required>
+				</div>
+
+				<div class="input-label">
+					<p>Электронная почта</p>
+					<input type="email" class="input required" required name="email" placeholder="email">
+				</div>
+				<div class="input-label">
+					<p>Номер телефона</p>
+					<input type="text" required class="input required" name="phone" placeholder="+7 --- ---- --- --">
+				</div>
+				<div class="input-label" style="position: relative;">
+					<p>Придумайте пароль</p>
+					<input type="password" data-input="1" class="input required" required name="password" placeholder="-----------">
+
+                               </div>
+				<div class="input-label" style="position: relative;">
+					<p>Повторите ваш пароль</p>
+					<input type="password" data-input="2" class="input required" required name="confirm_password" placeholder="-----------">
+
+                                </div>
+				<div class="login-bottom">
+					<input type="submit" class="blue-button br-10" value="зарегистрироваться">
+					<div style="display: flex; justify-content: center;">
+						<p>
+							Есть аккаунт?
+						</p>
+						<p>
+							<a href="{% url 'login' %}">Вход</a>
+						</p>
+					</div>
+					<p>
+						Нажимая на кнопку, вы принимаете условия<br>
+						пользовательского соглашения
+					</p>
+				</div>
+					</form>
+
+		</div>
+	</section>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load static %}
+{% load main_tags %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>
+		Pie&Cake - Вход
+	</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Forum&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+	<link rel="icon" type="image/png" href="favicon.svg">
+	<link rel="stylesheet" href='{% static "css/styles.css"%}'>
+	<link rel="stylesheet" href='{% static "css/swiper-bundle.min.css"%}'>
+	<link rel="stylesheet" href='{% static "css/media.css"%}'>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+</head>
+<body>
+
+	<section class="header-login">
+		<a href="/">
+			<img src="{% static 'img/logo-cake.svg' %}" alt="Cake Logo">
+		</a>
+	</section>
+
+	<section class="main-login">
+		<h2 class="h2" style="text-align: center;">Вход в кабинет</h2>
+		<form method="post" id="login-form" enctype="multipart/form-data">
+			{% csrf_token %}
+			<div class="input-label">
+				<p>Электронная почта</p>
+				<input required type="email" class="input required" name="email" placeholder="Почта">
+			</div>
+			<div class="input-label">
+				<p>Пароль</p>
+				<input required type="password" class="input required" name="password" placeholder="Пароль">
+			</div>
+			<div class="login-bottom">
+				<input id="submit-login" type="button" class="blue-button br-10" value="Войти">
+				<div style="display: flex; justify-content: center;">
+					<p>
+						Нет аккаунта?
+					</p>
+					<p>
+						<a href="{% url 'register' %}">Регистрация</a>
+					</p>
+				</div>
+			</div>
+		</form>
+	</section>
+
+<script src='{% static "js/main.js"%}'></script>
+</body>
+</html>

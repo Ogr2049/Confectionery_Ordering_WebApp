@@ -59,7 +59,7 @@
 					Рецепты
 				</a>
 				<div class="header-center-panel">
-					<a href="#">
+					<a href="{% if request.user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'login' %}{% endif %}">
 						<img src='{% static "img/lk-icon.svg"%}' alt="lk-icon">
 					</a>
 					<a href="#" style="position: relative;">
