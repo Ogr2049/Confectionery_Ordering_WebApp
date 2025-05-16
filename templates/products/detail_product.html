@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+{% load main_tags %}
+
+{% block title %} {{ product.title }} - Pie&Cake {% endblock title %}
+
+{% block no-header %}no-margin-b{% endblock no-header %}
+{% block content %}
+    <div id="breadcrumbs" class="grey-back" style="padding-top: 30px;">
+		<div class="wrp">
+			<ul class="breadcrumbs">
+				<li>
+					<a href="#" class="light">Главная</a>
+				</li>
+				<li>
+					<a href="{% url 'catalog' %}" class="light">Каталог</a>
+				</li>
+				<li>
+					<a href="{% url 'catalog' %}?category={{ product.category.slug }}" class="light">{{ product.category.title }}</a>
+				</li>
+				<li>
+					<span class="light">{{ product.title }}</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+	{% get_cart request=request as cart %}
+	<div id="product-detail">
+		<div class="wrp">
+				<img class="product-photo br-15" style="height: 570px; object-fit: contain;" src='{{ product.image.url }}' alt="{{ product.title }}">
+				<div class="product-desc-card br-15">
+					<h1 class="h2">{{ product.title }}<br> {{ product.weight }}</h1>
+					<div class="info">
+						<p class="info-price">
+							{{ product.price }} ₽.
+						</p>
+
+							{% if not in_cart %}
+								<a href="javascript:void(0)" class="blue-button br-10" id="add-product">ДОБАВИТЬ В КОРЗИНУ</a>
+							{% else %}
+								<a href="#"  class="blue-button br-10">В КОРЗИНЕ</a>
+							{% endif %}
+					</div>
+					<div class="desc-text">
+
+						<p class="head">О товаре</p>
+						<div class="text">
+							<p>{{ product.description }}</p>
+						</div>
+					</div>
+                    <div class="desc-text">
+
+						<p class="head">Состав</p>
+						<div class="text">
+							<p>{{ product.composition }}</p>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+
+{% endblock content %}
