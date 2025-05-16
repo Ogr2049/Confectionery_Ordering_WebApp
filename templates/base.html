@@ -21,11 +21,11 @@
 </head>
 <body>
 
-	<header id="header" class="fix">
+	<header id="header" class="fix {% block no-header %}{% endblock no-header %}">
 		<div class="wrp">
 			<div class="header-top">
 				<div class="header-mobile-buttons">
-					<a href="javascript:void(0)" class="blue-button br-10 header-catalog-button">Каталог
+					<a href="{% url 'catalog' %}" class="blue-button br-10 header-catalog-button">Каталог
 					</a>
 				</div>
 				<ul class="header-top-menu">
@@ -45,7 +45,7 @@
 					<img src='{% static "img/logo-cake.svg"%}' alt="logo" style="width: 230px">
 					<img src='{% static "img/logo-mini.svg"%}' class="logo-mini" alt="logo-mini">
 				</a>
-				<a href="#" class="blue-button br-10 header-catalog-button">
+				<a href="{% url 'catalog' %}" class="blue-button br-10 header-catalog-button">
 					Каталог
 				</a>
 				<form action="#" method="get" class="header-search">
