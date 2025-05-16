@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+{% load main_tags %}
+
+{% block title %}Pie&Cake - Каталог{% endblock title %}
+
+{% block content %}
+<div id="breadcrumbs">
+		<div class="wrp">
+			<ul class="breadcrumbs">
+				<li>
+					<a href="{% url 'index' %}" class="light">Главная</a>
+				</li>
+				<li>
+					<a href="{% url 'catalog' %}" class="light">Каталог</a>
+				</li>
+				{% if category %}
+					<li>
+						<span class="light">{{ category.title }}</span>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+
+	</div>
+
+	<div id="catalog-block">
+		<div class="wrp">
+			<div class="catalog-side">
+				<p style="margin-bottom: 30px;" class="h2">{% if request.GET.q %}{{ request.GET.q }}{% else %}Каталог{% endif %}</p>
+				<ul class="catalog-side-menu">
+					<li>
+						<a href="{% url 'catalog' %}" class="single-cat">Все товары</a>
+					</li>
+					{% get_categories as parent_categories %}
+					{% for parent_category in parent_categories %}
+					<li>
+						<a href="{% url 'catalog' %}?category={{ parent_category.slug }}" class="single-cat">{{ parent_category.title }}</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="catalog-block">
+				 <input type="text" id="active-category" value="{% if category %}{{ category.slug }}{% else %}none{% endif %}" hidden>
+				 <div class="catalog-order">
+					<div style="position: relative;" id="order-catalog">
+						<div class="selector-button">
+							<span class="name">Цена по возрастанию</span>
+							<img src="{% static 'img/arrow-down.svg' %}" alt="Arrow">
+						</div>
+						<div class="selector-list">
+							<label>
+								<input type="radio" name="order" data-name="price" value="Цена по возрастанию">
+								<span>Цена по возрастанию</span>
+							</label>
+							<label>
+								<input type="radio" name="order" data-name="-price" value="Цена по убыванию">
+								<span>Цена по убыванию</span>
+							</label>
+							<label>
+								<input type="radio" name="order" data-name="weight" value="Вес по убыванию">
+								<span>Вес по убыванию</span>
+							</label>
+							<label>
+								<input type="radio" name="order" data-name="-weight" value="Вес по возрастанию">
+								<span>Вес по возрастанию</span>
+							</label>
+						</div>
+					</div>
+				</div>
+				<div id="catalog-listing">
+							{% for product in products %}
+							<div class="catalog-product-item">
+								{% include "includes/card_product.html" %}
+							</div>
+							{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock content %}
