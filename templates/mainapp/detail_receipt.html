@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% load main_tags %}
+
+{% block title %}{{ receipt.title }} - Pie&Cake{% endblock title %}
+
+{% block content %}
+    <div id="breadcrumbs">
+		<div class="wrp">
+			<ul class="breadcrumbs">
+				<li>
+					<a href="{% url 'index' %}" class="light">Главная</a>
+				</li>
+				<li>
+					<a href="{% url 'receipts' %}" class="light">Рецепты</a>
+				</li>
+                <li>
+                    <span class="light">{{ receipt.title }}</span>
+                </li>
+			</ul>
+		</div>
+	</div>
+
+    <div id="receipts" class="detail-receipt-block" style="padding-bottom: 260px;">
+      <div class="wrp">
+          <p style="margin-bottom: 30px;text-align: center;" class="h2">{{ receipt.title }} от {{ receipt.author.full_name }}</p>
+          <div class="receipt-details">
+              <img class="receipt-cover" src="{{ receipt.cover.url }}" alt="{{ receipt.title }}">
+              <p>{{ receipt.description }}</p>
+              {% if request.user == receipt.author %}
+                <a href="{% url 'delete_receipt' id=receipt.id %}" style="background: brown;" class="blue-button br-10">Удалить</a>
+              {% else %}
+                {% if request.user.is_authenticated %}
+                    <a href="#" class="blue-button like-button br-10"><img style="width: 25px; height: 25px; margin-right: 10px;" src="{% static 'img/like.png' %}" alt="like">Like</a>
+                {% endif %}
+              {% endif %}
+          </div>
+      </div>
+    </div>
+
+{% endblock content %}
