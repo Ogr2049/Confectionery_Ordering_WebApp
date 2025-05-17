@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+{% load main_tags %}
+
+{% block title %}Создание рецепта - Pie&Cake{% endblock title %}
+
+{% block content %}
+  <div id="breadcrumbs">
+		<div class="wrp">
+			<ul class="breadcrumbs">
+				<li>
+					<a href="{% url 'index' %}" class="light">Главная</a>
+				</li>
+				<li>
+					<a href="{% url 'receipts' %}" class="light">Рецепты</a>
+				</li>
+                <li>
+                    <span class="light">Создание рецепта</span>
+                </li>
+			</ul>
+		</div>
+	</div>
+
+  <div id="receipts" style="padding-bottom: 260px;">
+      <div class="wrp">
+          <p style="margin-bottom: 30px;" class="h2">Создание рецепта</p>
+          <form method="post" enctype="multipart/form-data">
+            <div style="display: flex; flex-direction: column">
+						{% csrf_token %}
+						<div class="input-label">
+							<p>Заголовок рецепта</p>
+							<input type="text" class="input" placeholder="Заголовок" name="title">
+						</div>
+						<div class="input-label">
+							<p>Описание</p>
+                            <textarea class="input" name="description" placeholder="Описание" rows="4"></textarea>
+						</div>
+						<div class="input-label">
+							<p>Изображение</p>
+							<input type="file"  name="cover">
+						</div>
+						<div class="login-bottom">
+							<input type="submit" class="blue-button br-10" value="сохранить">
+						</div>
+					</div>
+          </form>
+      </div>
+  </div>
+{% endblock content %}
