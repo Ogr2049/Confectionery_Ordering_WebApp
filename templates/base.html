@@ -33,10 +33,10 @@
 						<a href="{% url 'index' %}" class="light active">О магазине</a>
 					</li>
 					<li>
-						<a href="#" class="light">Контакты</a>
+						<a href="{% url 'contacts' %}" class="light">Контакты</a>
 					</li>
 					<li>
-						<a href="#" class="light">Оплата и доставка</a>
+						<a href="{% url 'delivery' %}" class="light">Оплата и доставка</a>
 					</li>
 				</ul>
 			</div>
@@ -48,14 +48,14 @@
 				<a href="{% url 'catalog' %}" class="blue-button br-10 header-catalog-button">
 					Каталог
 				</a>
-				<form action="#" method="get" class="header-search">
+				<form action="{% url 'catalog' %}" method="get" class="header-search">
 					<input type="search" name="q"  placeholder="Поиск товаров" class="input br-10">
 					<input type="submit" value="" class="btn">
 				</form>
 				<a href="#" class="header-white-button br-10 light">
 					Конструктор тортов
 				</a>
-				<a href="#" class="header-white-button br-10 light">
+				<a href="{% url 'receipts' %}" class="header-white-button br-10 light">
 					Рецепты
 				</a>
 				<div class="header-center-panel">
@@ -80,76 +80,6 @@
 
 		</div>
 	</header>
-
-	<div class="mobile-panel">
-		<a href="{% url 'index' %}" class="mobile-panel-item active">
-			<span class="icon">
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M3.0105 11.2197V15.7097C3.0105 20.1997 4.8105 21.9997 9.3005 21.9997H14.6905C19.1805 21.9997 20.9805 20.1997 20.9805 15.7097V11.2197" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-					<path d="M12.0007 12C13.8307 12 15.1807 10.51 15.0007 8.68L14.3407 2H9.67072L9.00072 8.68C8.82072 10.51 10.1707 12 12.0007 12Z" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-					<path d="M18.3103 12C20.3303 12 21.8103 10.36 21.6103 8.35L21.3303 5.6C20.9703 3 19.9703 2 17.3503 2H14.3003L15.0003 9.01C15.1703 10.66 16.6603 12 18.3103 12Z" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-					<path d="M5.63988 12C7.28988 12 8.77988 10.66 8.93988 9.01L9.15988 6.8L9.63988 2H6.58988C3.96988 2 2.96988 3 2.60988 5.6L2.33988 8.35C2.13988 10.36 3.61988 12 5.63988 12Z" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-					<path d="M12.0005 17C10.3305 17 9.50049 17.83 9.50049 19.5V22H14.5005V19.5C14.5005 17.83 13.6705 17 12.0005 17Z" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-				</svg>
-			</span>
-			<span class="text">Главная</span>
-		</a>
-		<a href="#" class="mobile-panel-item">
-			<span class="icon">
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M4.99951 10H6.99951C8.99951 10 9.99951 9 9.99951 7V5C9.99951 3 8.99951 2 6.99951 2H4.99951C2.99951 2 1.99951 3 1.99951 5V7C1.99951 9 2.99951 10 4.99951 10Z" stroke="#1A1A1A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-					<path d="M16.9995 10H18.9995C20.9995 10 21.9995 9 21.9995 7V5C21.9995 3 20.9995 2 18.9995 2H16.9995C14.9995 2 13.9995 3 13.9995 5V7C13.9995 9 14.9995 10 16.9995 10Z" stroke="#1A1A1A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-					<path d="M16.9995 22H18.9995C20.9995 22 21.9995 21 21.9995 19V17C21.9995 15 20.9995 14 18.9995 14H16.9995C14.9995 14 13.9995 15 13.9995 17V19C13.9995 21 14.9995 22 16.9995 22Z" stroke="#1A1A1A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-					<path d="M4.99951 22H6.99951C8.99951 22 9.99951 21 9.99951 19V17C9.99951 15 8.99951 14 6.99951 14H4.99951C2.99951 14 1.99951 15 1.99951 17V19C1.99951 21 2.99951 22 4.99951 22Z" stroke="#1A1A1A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-				</svg>
-			</span>
-			<span class="text">Каталог</span>
-		</a>
-		<a href="#" class="mobile-panel-item" style="position: relative;">
-			<span class="icon">
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M8.49976 14.25C8.49976 16.17 10.0798 17.75 11.9998 17.75C13.9198 17.75 15.4998 16.17 15.4998 14.25" stroke="#1A1A1A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-					<path d="M8.8097 2L5.1897 5.63" stroke="#1A1A1A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-					<path d="M15.1899 2L18.8099 5.63" stroke="#1A1A1A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-					<path d="M2 7.8501C2 6.0001 2.99 5.8501 4.22 5.8501H19.78C21.01 5.8501 22 6.0001 22 7.8501C22 10.0001 21.01 9.8501 19.78 9.8501H4.22C2.99 9.8501 2 10.0001 2 7.8501Z" stroke="#1A1A1A" stroke-width="1.5"/>
-					<path d="M3.5 10L4.91 18.64C5.23 20.58 6 22 8.86 22H14.89C18 22 18.46 20.64 18.82 18.76L20.5 10" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
-				</svg>
-			</span>
-			<span class="text">Корзина</span>
-			<div class="count-header">
-				0
-			</div>
-		</a>
-		<a href="#" class="mobile-panel-item">
-			<span class="icon">
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M12.62 20.8096C12.28 20.9296 11.72 20.9296 11.38 20.8096C8.48 19.8196 2 15.6896 2 8.68961C2 5.59961 4.49 3.09961 7.56 3.09961C9.38 3.09961 10.99 3.97961 12 5.33961C13.01 3.97961 14.63 3.09961 16.44 3.09961C19.51 3.09961 22 5.59961 22 8.68961C22 15.6896 15.52 19.8196 12.62 20.8096Z" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-				</svg>
-			</span>
-			<span class="text">Избранное</span>
-		</a>
-		{% if not request.user.is_authenticated %}
-		<a href="#" class="mobile-panel-item">
-			<span class="icon">
-				<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M12.4995 12C15.2609 12 17.4995 9.76142 17.4995 7C17.4995 4.23858 15.2609 2 12.4995 2C9.73809 2 7.49951 4.23858 7.49951 7C7.49951 9.76142 9.73809 12 12.4995 12Z" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-					<path d="M21.0901 22C21.0901 18.13 17.2402 15 12.5002 15C7.76015 15 3.91016 18.13 3.91016 22" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-				</svg>
-			</span>
-			<span class="text">Войти</span>
-		</a>
-		{% else %}
-		<a href="#" class="mobile-panel-item">
-			<span class="icon">
-				<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M12.4995 12C15.2609 12 17.4995 9.76142 17.4995 7C17.4995 4.23858 15.2609 2 12.4995 2C9.73809 2 7.49951 4.23858 7.49951 7C7.49951 9.76142 9.73809 12 12.4995 12Z" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-					<path d="M21.0901 22C21.0901 18.13 17.2402 15 12.5002 15C7.76015 15 3.91016 18.13 3.91016 22" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-				</svg>
-			</span>
-			<span class="text">Кабинет</span>
-		</a>
-		{% endif %}
-	</div>
 
 	{% block content%}
 	{% endblock content%}

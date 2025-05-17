@@ -2,8 +2,8 @@
 
 <div class="product-item br-15" data-id="{{ product.id }}">
     <div class="product-item-image">
-        <img src="{% if product.image %}{{ product.image.url }}{% endif %}" alt="{{ product.title }}">
         <a href="{% url 'detail_product' slug=product.slug %}" class="link"></a>
+        <img src="{% if product.image %}{{ product.image.url }}{% endif %}" alt="{{ product.title }}">
     </div>
     <div class="product-item-body">
         <a href="{% url 'detail_product' slug=product.slug %}" class="product-title">{% if not request.user_agent.is_mobile %}{{ product.title|truncatechars:40 }}{% else %}{{ product.title|truncatechars:30 }}{% endif %} {{ product.weight }}</a>
@@ -11,9 +11,9 @@
                 <p class="bottom-price">{{ product.price }} ₽</p>
                 {% get_count_product product=product request=request as count_product %}
                       {% if count_product %}
-                         <div onclick="document.location.href='/cart/'" data-id="{{ product.id }}"  class="bottom-cart in-cart br-10"></div>
+                         <a onclick="document.location.href='/cart/'" data-id="{{ product.id }}"  class="bottom-cart in-cart br-10"></a>
                       {% else %}
-                         <div data-id="{{ product.id }}"  class="bottom-cart add-to-cart br-10"></div>
+                         <a data-id="{{ product.id }}"  class="bottom-cart add-to-cart br-10"></a>
                       {% endif %}
 
     </div>

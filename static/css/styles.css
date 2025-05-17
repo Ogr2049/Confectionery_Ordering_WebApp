@@ -666,7 +666,7 @@ a {
 }
 
 .product-item-body .bottom-price {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     line-height: 120%;
     display: flex;
@@ -969,3 +969,56 @@ a {
     margin-bottom: 12px;
 }
 
+#receipts {
+    padding-bottom: 100px;
+}
+
+.receipts-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.like-receipt {
+    display: flex;
+    font-weight: bold;
+    align-items: center;
+}
+
+.like-receipt img {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.receipt-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+        border: 1px solid #00abab;
+    border-radius: 16px;
+    padding: 30px;
+}
+
+.receipt-cover {
+    width: 700px;
+    height: 100%;
+    border-radius: 16px;
+}
+
+.receipt-details p {
+    font-size: 16px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.like-button {
+    background: inherit;
+    color: black;
+    border: 1px solid #00abab;
+}
+
+.detail-receipt-block .wrp {
+    width: 900px
+}
