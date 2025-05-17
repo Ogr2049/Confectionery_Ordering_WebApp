@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% load main_tags %}
+
+{% block title %}Рецепты - Pie&Cake{% endblock title %}
+
+{% block content %}
+    <div id="breadcrumbs">
+		<div class="wrp">
+			<ul class="breadcrumbs">
+				<li>
+					<a href="{% url 'index' %}" class="light">Главная</a>
+				</li>
+				<li>
+					<span class="light">Рецепты</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+    <div id="receipts">
+        <div class="wrp">
+            <p style="margin-bottom: 30px;" class="h2">Рецепты</p>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'create_receipt' %}" class="blue-button br-10">Добавить новый рецепт</a>
+            {% endif %}
+            <div class="receipts-list">
+                {% for receipt in receipts %}
+                    <div class="product-item br-15" style="width: 315px;">
+                        <div class="product-item-image" style="width: 290px">
+                            <a href="{% url 'detail_receipt' slug=receipt.slug %}" class="link"></a>
+                                <img style="    width: 100%;
+    height: 100%;
+    object-fit: contain;" src="{% if receipt.cover %}{{ receipt.cover.url }}{% endif %}" alt="{{ receipt.title }}">
+                            </div>
+                            <div class="product-item-body">
+                                <a style="font-size: 18px;" href="{% url 'detail_receipt' slug=receipt.slug %}" class="product-title">{{ receipt.title }}</a>
+                                <div class="product-bottom" style="justify-content: space-between;">
+                                    <p class="bottom-price">Автор: {{ receipt.author.full_name }}</p>
+                                    <a href="#" data-id="{{ receipt.id }}"  class="like-receipt">
+                                        {{ receipt.likes.count }}
+                                        <img src="{% static 'img/like.png' %}" alt="like">
+                                    </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
