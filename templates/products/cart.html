@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+{% load main_tags %}
+
+{% block title %}Корзина - Pie&Cake{% endblock title %}
+
+{% block content %}
+  <div id="breadcrumbs">
+		<div class="wrp">
+			<ul class="breadcrumbs">
+				<li>
+					<a href="{% url 'index' %}" class="light">Главная</a>
+				</li>
+				<li>
+					<span class="light">Корзина</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+    <section id="cart-block">
+        <div class="wrp">
+			{% if cart.cart_products.all %}
+				{% csrf_token %}
+			<div class="cart-block">
+				<div class="cart-items">
+					<div class="cart-header">
+						<h1 class="h2">Корзина <span class="light" id="cart-count">[{{ cart.quantity_all }}]</span></h1>
+						<a href="{% url 'clear_cart' %}" class="light">Очистить корзину</a>
+					</div>
+					<div class="cart-items-list">
+						{% for cart_product in cart.cart_products.all %}
+						<div  class="cart-item br-10">
+							<div style="    display: flex;
+    align-items: center;
+    width: 100%;">
+							<a href="{% url 'detail_product' slug=cart_product.product.slug %}" class="img">
+								<img style="    height: inherit; object-fit: contain;" src="{% if cart_product.product.image %}{{ cart_product.product.image.url }}{% endif %}" alt="product">
+							</a>
+                                                        <div class="cart-desc">
+							<a href="{% url 'detail_product' slug=cart_product.product.slug %}" class="title">{{ cart_product.product.title }}</a>
+                                                              <p class="product-price">{{ cart_product.product.price }} ₽ за штуку</p>
+                                                        </div>
+								</div>
+								<div style="    display: flex
+;
+    align-items: center;
+    width: 40%;">
+                                                        <div class="quantity-count br-10">
+								<a data-id="{{ cart_product.id }}" href="javascript:void(0)" class="dec"></a>
+								<input data-id="{{ cart_product.id }}" class="number-text" type="number" value="{{ cart_product.quantity }}">
+                                                          	<a data-id="{{ cart_product.id }}" href="javascript:void(0)" class="inc"></a>
+							</div>
+							<p class="price">{{ cart_product.total_price }} ₽</p>
+                            <a data-id="{{ cart_product.id }}" href="javascript:void(0)" class="delete-product">
+                                   <img src="{% static 'img/delete.png' %}" style="width: 24px;">
+                            </a>
+									</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="cart-total">
+					<div class="cart-links">
+                        {% if not request.user.is_authenticated %}
+						    <a href="{% url 'login' %}" class="light">Вход в кабинет →</a>
+                        {% endif %}
+						<a href="{% url 'delivery' %}" class="light">Оплата и доставка →</a>
+					</div>
+					<div class="cart-total-info">
+						<p class="light">
+							<span>Товаров в корзине:</span>
+							<span id="quantity-all">{{ cart.quantity_all }}</span>
+						</p>
+						<p>
+							<span>Итого:</span>
+							<span id="total-price">{{ cart.total_price }} ₽</span>
+						</p>
+					</div>
+					<a href="#" class="blue-button br-10" style="    display: block;
+    text-align: center;
+    margin-top: 20px;">Перейти к оформлению</a>
+				</div>
+			</div>
+			{% else %}
+				<div class="cart">
+				<div class="cart-left">
+					<div class="cart-left-top">
+						<h1 class="h2">Корзина пуста</h1>
+					</div>
+
+				</div>
+
+			</div>
+			{% endif %}
+		</div>
+    </section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="{% static 'js/cart.js' %}"></script>
+{% endblock content %}
