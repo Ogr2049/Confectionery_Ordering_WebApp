@@ -62,7 +62,7 @@
 					<a href="{% if request.user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'login' %}{% endif %}">
 						<img src='{% static "img/lk-icon.svg"%}' alt="lk-icon">
 					</a>
-					<a href="#" style="position: relative;">
+					<a href="{% url 'cart' %}" style="position: relative;">
 						<img src='{% static "img/cart-icon.svg"%}' alt="cart">
 						<div class="count-header">
 							0

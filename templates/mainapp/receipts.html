@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load main_tags %}
+{% load receipt_tags %}
 
 {% block title %}Рецепты - Pie&Cake{% endblock title %}
 
@@ -19,6 +20,7 @@
 	</div>
 
     <div id="receipts">
+        {% csrf_token %}
         <div class="wrp">
             <p style="margin-bottom: 30px;" class="h2">Рецепты</p>
             {% if request.user.is_authenticated %}
@@ -37,9 +39,14 @@
                                 <a style="font-size: 18px;" href="{% url 'detail_receipt' slug=receipt.slug %}" class="product-title">{{ receipt.title }}</a>
                                 <div class="product-bottom" style="justify-content: space-between;">
                                     <p class="bottom-price">Автор: {{ receipt.author.full_name }}</p>
-                                    <a href="#" data-id="{{ receipt.id }}"  class="like-receipt">
-                                        {{ receipt.likes.count }}
-                                        <img src="{% static 'img/like.png' %}" alt="like">
+                                    <a data-id="{{ receipt.id }}"  class="like-receipt" {% if request.user.is_authenticated %} id="like-receipt" {% endif %}>
+                                        <span>{{ receipt.likes.count }}</span>
+                                        {% is_like request=request receipt_id=receipt.id as like_user %}
+                                        {% if like_user %}
+                                            <img src="{% static 'img/like-active.png' %}" alt="like active">
+                                        {% else %}
+                                            <img src="{% static 'img/like.png' %}" alt="like">
+                                        {% endif %}
                                     </a>
                             </div>
                         </div>
@@ -48,4 +55,35 @@
             </div>
         </div>
     </div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script>
+    const likeReceipt = (receipt_id) => (
+            $.ajax({
+                type: "POST",
+                url: "{% url 'update_like' %}",
+                data: {
+                    'receipt_id': receipt_id,
+                    'csrfmiddlewaretoken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
+                },
+                success: (res) => {
+	    			document.querySelector(`a[data-id="${receipt_id}"]`).querySelector('span').textContent = res.likes_count;
+                    document.querySelector(`a[data-id="${receipt_id}"]`).querySelector('img').src = "{% static 'img/like-active.png' %}";
+
+                },
+                error: (err) => {
+                    console.log(err);
+                }
+            })
+        );
+
+
+    var likeButtons = document.querySelectorAll("#like-receipt");
+
+    for (let button of likeButtons) {
+        button.onclick = function () {
+            likeReceipt(button.getAttribute("data-id"));
+        }
+    }
+</script>
 {% endblock content %}

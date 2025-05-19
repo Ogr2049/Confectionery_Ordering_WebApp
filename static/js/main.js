@@ -91,3 +91,37 @@ if (loginButton) {
     loginForm.submit();
 }
 }
+
+const addCartCard = (product_id) => (
+        $.ajax({
+            type: "GET",
+            url: "/add_cart/",
+            data: {
+                'product_id': product_id
+            },
+            success: (res) => {
+            },
+            error: (err) => {
+                console.log(err);
+            }
+        })
+);
+
+var countHeader = document.querySelector(".count-header");
+var addCartButtons = document.querySelectorAll(".bottom-cart");
+
+for (let button of addCartButtons) {
+        let buttons = document.querySelectorAll(`.bottom-cart[data-id="${button.getAttribute('data-id')}"]`);
+        for (let button2 of buttons) {
+		    button2.onclick = function () {
+                 if (!button2.classList.contains("in-cart")) {
+			        addCartCard(button2.getAttribute("data-id"));
+                    button2.classList.add("in-cart");
+                    button2.onclick = function () {
+                        document.location.href = "/cart";
+                    }
+                 }
+				countHeader.textContent = Number(countHeader.textContent) + 1;
+		    }
+        }
+}
