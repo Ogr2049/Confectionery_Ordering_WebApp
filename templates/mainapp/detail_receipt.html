@@ -25,20 +25,25 @@
     <div id="receipts" class="detail-receipt-block" style="padding-bottom: 260px;">
       {% csrf_token %}
       <div class="wrp">
-          <p style="margin-bottom: 30px;text-align: center;" class="h2">{{ receipt.title }} от {{ receipt.author.full_name }}</p>
+          <p style="margin-bottom: 30px;text-align: center;    font-size: 28px;" class="h2">{{ receipt.title }} от {{ receipt.author.full_name }}</p>
           <div class="receipt-details">
               <img class="receipt-cover" src="{{ receipt.cover.url }}" alt="{{ receipt.title }}">
-              <p>{{ receipt.description }}</p>
+              <p>{{ receipt.description|linebreaks }}</p>
               {% if request.user == receipt.author %}
-                <a href="{% url 'delete_receipt' id=receipt.id %}" style="background: brown;" class="blue-button br-10">Удалить</a>
+                <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                    <a href="{% url 'edit_receipt' id=receipt.id %}" class="blue-button br-10">Редактировать</a>
+                    <a href="{% url 'delete_receipt' id=receipt.id %}" style="background: brown;" class="blue-button br-10">Удалить</a>
+                </div>
               {% else %}
                 {% if request.user.is_authenticated %}
                     {% is_like request=request receipt_id=receipt.id as like_user %}
                     {% if like_user %}
-                        <a data-id="{{ receipt.id }}" class="blue-button like-button br-10" {% if request.user.is_authenticated %} id="like-receipt" {% endif %}><img style="width: 25px; height: 25px; margin-right: 10px;" src="{% static 'img/like-active.png' %}" alt="like active">Like</a>
+                        <a data-id="{{ receipt.id }}" style="background-color: #c74444;" class="blue-button br-10" {% if request.user.is_authenticated %} id="like-receipt" {% endif %}>Нравиться</a>
                     {% else %}
-                        <a  data-id="{{ receipt.id }}" class="blue-button like-button br-10" {% if request.user.is_authenticated %} id="like-receipt" {% endif %}><img style="width: 25px; height: 25px; margin-right: 10px;" src="{% static 'img/like.png' %}" alt="like">Like</a>
+                        <a  data-id="{{ receipt.id }}" class="blue-button br-10" {% if request.user.is_authenticated %} id="like-receipt" {% endif %}>Нравиться</a>
                     {% endif %}
+                {% else %}
+                    <a  data-id="{{ receipt.id }}" class="blue-button br-10">Нравиться</a>
                 {% endif %}
               {% endif %}
           </div>
@@ -56,7 +61,7 @@
                     'csrfmiddlewaretoken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
                 },
                 success: (res) => {
-                    document.querySelector(`a[data-id="${receipt_id}"]`).querySelector('img').src = "{% static 'img/like-active.png' %}";
+                    document.querySelector(`a[data-id="${receipt_id}"]`).style.backgroundColor = "#c74444";
                 },
                 error: (err) => {
                     console.log(err);

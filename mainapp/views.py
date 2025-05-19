@@ -23,6 +23,10 @@ class ReceiptsView(CartMixin, View):
 
     def get(self, request, *args, **kwargs):
         receipts = models.Receipt.objects.all()
+        if "q" in request.GET.keys():
+            receipts = receipts.filter(title__icontains=request.GET.get("q"))
+        if "receipts" in request.GET.keys():
+            receipts = receipts.filter(author=request.user)
         return render(request, "mainapp/receipts.html", {"receipts": receipts})
 
 class ReceiptDetailView(CartMixin, View):
@@ -51,6 +55,24 @@ class DeleteReceiptView(CartMixin, View):
         receipt = models.Receipt.objects.get(id=kwargs.get("id"))
         if receipt.author == request.user:
             receipt.delete()
+        return redirect("receipts")
+
+class EditReceiptView(CartMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        receipt = models.Receipt.objects.get(id=kwargs.get("id"))
+        if receipt.author != request.user:
+            return redirect("receipts")
+        return render(request, "mainapp/edit_receipt.html", {"receipt": receipt})
+
+    def post(self, request, *args, **kwargs):
+        receipt = models.Receipt.objects.get(id=kwargs.get("id"))
+        data = request.POST
+        receipt.title=data.get("title")
+        if "cover" in request.FILES.keys():
+            receipt.cover=request.FILES.get("cover")
+        receipt.description=data.get("description")
+        receipt.save()
         return redirect("receipts")
 
 def update_like(request):

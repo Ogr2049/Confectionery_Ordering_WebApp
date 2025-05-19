@@ -24,7 +24,7 @@ class Receipt(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = russian_to_engilsh(self.title)
+            self.slug = f"{russian_to_engilsh(self.title)}-{self.id}"
         super(Receipt, self).save(*args, **kwargs)
 
     class Meta:

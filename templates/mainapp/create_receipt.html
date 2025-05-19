@@ -29,15 +29,15 @@
 						{% csrf_token %}
 						<div class="input-label">
 							<p>Заголовок рецепта</p>
-							<input type="text" class="input" placeholder="Заголовок" name="title">
+							<input type="text" class="input" placeholder="Заголовок" name="title" required>
 						</div>
 						<div class="input-label">
 							<p>Описание</p>
-                            <textarea class="input" name="description" placeholder="Описание" rows="4"></textarea>
+                            <textarea class="input" name="description" placeholder="Описание" rows="12" required></textarea>
 						</div>
 						<div class="input-label">
 							<p>Изображение</p>
-							<input type="file"  name="cover">
+							<input type="file"  name="cover" required>
 						</div>
 						<div class="login-bottom">
 							<input type="submit" class="blue-button br-10" value="сохранить">
@@ -46,4 +46,8 @@
           </form>
       </div>
   </div>
+
+<script>
+
+</script>
 {% endblock content %}
