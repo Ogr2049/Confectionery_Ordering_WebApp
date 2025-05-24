@@ -103,3 +103,27 @@ class Delivery(models.Model):
         verbose_name_plural = "Доставки"
 
 
+class Order(models.Model):
+
+    status = models.CharField(verbose_name="Статус заказа", max_length=50, default="В процессе",
+                              blank=True, null=True)
+    full_name = models.CharField(verbose_name="ФИО", max_length=100, blank=True, null=True)
+    email = models.EmailField(verbose_name="Почта", blank=True, null=True)
+    phone = models.CharField(verbose_name="Номер телефона", max_length=20, blank=True, null=True)
+    type_pay = models.CharField(verbose_name="Способ оплаты", choices=TYPE_PAY, max_length=70, blank=True, null=True)
+    comment = models.TextField(verbose_name="Комментарий", blank=True, null=True)
+
+    delivery = models.ForeignKey(Delivery, verbose_name="Доставка", on_delete=models.SET_NULL, blank=True, null=True,
+                                 related_name="order")
+    products = models.ManyToManyField(CartProduct, verbose_name="Продукты", blank=True, related_name="orders")
+    quantity_all = models.PositiveBigIntegerField(verbose_name="Кол-во товаров", default=1)
+    amount = models.FloatField(verbose_name="Цена заказа", default=1)
+
+    date_order = models.DateTimeField(verbose_name="Дата заказа", auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.full_name}"
+
+    class Meta:
+        verbose_name = "Заказ"
+        verbose_name_plural = "Заказы"
