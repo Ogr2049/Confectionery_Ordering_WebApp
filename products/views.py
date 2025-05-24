@@ -167,3 +167,41 @@ def minus_product_cart(request):
          "total_price": cart_product.total_price, "title": cart_product.product.title}
         for cart_product in cart.cart_products.all()]})
 
+class OrderView(CartMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            cart = request.user.cart
+        else:
+            return redirect("login")
+        return render(request, "products/order.html", {"cart": cart})
+
+    def post(self, request, *args, **kwargs):
+        data = request.POST
+        cart = request.user.cart
+        new_order = models.Order.objects.create(full_name=data.get("name"), phone=data.get("phone"),
+                                                email=data.get("email"), type_pay=data.get("buy"),
+                                                comment=data.get("comment"), quantity_all=cart.quantity_all)
+        new_delivery = models.Delivery.objects.create(date_delivery=data.get("date-delivery"))
+        if data.get("delivery-type") == "courier":
+            new_delivery.address = data.get("address")
+            new_order.amount = cart.total_price + 300
+        else:
+            new_delivery.pvz = data.get("pvz")
+            new_order.amount = cart.total_price
+        new_delivery.save()
+        new_order.delivery = new_delivery
+
+        for cart_product in cart.cart_products.all():
+            new_order.products.add(cart_product)
+        new_order.save()
+        request.user.orders.add(new_order)
+        request.user.save()
+        request.session["new_order"] = new_order.id
+        return redirect("success")
+
+class SuccessView(CartMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        order = models.Order.objects.get(id=request.session.get("new_order"))
+        return render(request, "products/success.html", {"order": order})
