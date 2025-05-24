@@ -1,46 +1,19 @@
 {% extends "base.html" %}
 {% load static %}
 {% load main_tags %}
-{% block title %}Pie&Cake - Мои заказы{% endblock title %}
+
+{% block title %}Заказ успешно оформлен - Pie&Cake{% endblock title %}
 
 {% block content %}
-<section id="breadcrumbs">
-		<div class="wrp">
-			<ul class="breadcrumbs">
-				<li>
-					<a href="{% url 'index' %}" class="light">Главная</a>
-				</li>
-				<li>
-					<a href="{% url 'profile' %}" class="light">Профиль</a>
-				</li>
-				<li>
-					<span class="light">Мои заказы</span>
-				</li>
-			</ul>
-		</div>
-	</section>
-
-	<section id="cabinet">
-		<div class="wrp">
-			<div class="cabinet-side">
-				<p class="h2">Личные данные</p>
-				<div class="list-cabinet">
-					<div>
-						<a href="{% url 'profile' %}">Личный кабинет</a>
-					</div>
-					<div>
-						<a href="{% url 'orders' %}" class="active">История заказов</a>
-					</div>
-					<div>
-						<a href="{% url 'logout' %}">Выход</a>
-					</div>
-				</div>
-			</div>
-			<div class="cabinet-main" style="{% if not request.user.orders.all %}    background: inherit;
-    border: none;{% endif %}">
-				{% if request.user.orders.all %}
-				{% for order in request.user.orders.all %}
-					<div class="orders-item in-progress">
+  <section id="success-block">
+      <div class="wrp">
+          <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <h1 class="h2" style="text-align: center;">Заказ успешно оформлен</h1>
+            <img src="{% static 'img/success.png' %}" class="success-img" alt="success">
+          </div>
+          <h1 class="h2" style="text-align: center;">Информация о заказе:</h1>
+          <div class="cabinet-main" style="width: 100%; margin-top: 30px; margin-bottom: 30px;">
+          <div class="orders-item in-progress">
 					<div class="orders-item-button active">
 						<img class="icon" src="{% static 'img/order-item-icon4.svg' %}" alt="order-icon">
 						<p class="name">
@@ -101,11 +74,11 @@
 						</div>
 					</div>
 				</div>
-				{% endfor %}
-                {% else %}
-				     <p class="h2">Заказы отсутствуют</p>
-				{% endif %}
-			</div>
-		</div>
-	</section>
+
+              </div>
+            <a href="{% url 'orders' %}" class="blue-button br-10" style="    display: block;
+    width: max-content;
+    margin-bottom: 30px;">Перейти в историю заказов</a>
+      </div>
+  </section>
 {% endblock content %}

@@ -21,7 +21,7 @@ class CatalogView(CartMixin, View):
             category = models.Category.objects.get(slug=request.GET.get("category"))
             products = products.filter(category=category)
         if "q" in request.GET.keys():
-            products = products.filter(title=request.GET.get("q"))
+            products = products.filter(title__icontains=request.GET.get("q"))
         return render(request, "products/catalog.html", {"products": products, "category": category})
 
 class ProductDetailView(CartMixin, View):
@@ -166,3 +166,4 @@ def minus_product_cart(request):
          "price": cart_product.product.price,
          "total_price": cart_product.total_price, "title": cart_product.product.title}
         for cart_product in cart.cart_products.all()]})
+

@@ -1,7 +1,7 @@
 {% load main_tags %}
 
 <div class="product-item br-15" data-id="{{ product.id }}">
-    <div class="product-item-image">
+    <div class="product-item-image" style="height: auto;">
         <a href="{% url 'detail_product' slug=product.slug %}" class="link"></a>
         <img src="{% if product.image %}{{ product.image.url }}{% endif %}" alt="{{ product.title }}">
     </div>

@@ -23,20 +23,20 @@
         {% csrf_token %}
         <div class="wrp">
             <p style="margin-bottom: 10px;" class="h2">Рецепты</p>
-            {% if request.user.is_authenticated %}
-                <div style="display: flex;">
-                    <a href="{% url 'create_receipt' %}" class="blue-button br-10 add-receipt-button">Добавить новый рецепт</a>
-                    <a href="/receipts/?receipts=my" class="blue-button br-10 add-receipt-button" style="margin-left: 15px;">Показать мои рецепты</a>
-                </div>
-            {% endif %}
-            <form action="/receipts/" method="get" class="header-search" style="width:100%;    margin-bottom: 40px;">
+            <form action="/receipts/" method="get" class="header-search" style="width:100%;    margin-bottom: 40px;    margin-top: 40px;">
                 <input type="search" name="q" placeholder="Поиск рецептов" class="input br-10">
                 <input type="submit" value="" class="btn">
             </form>
+            {% if request.user.is_authenticated %}
+                <div style="display: flex;">
+                    <a href="{% url 'create_receipt' %}" class="blue-button br-10 add-receipt-button">Добавить новый рецепт</a>
+                    <a href="/receipts/?receipts=my" class="header-white-button br-10 light add-receipt-button" style="margin-left: 15px;">Показать мои рецепты</a>
+                </div>
+            {% endif %}
             <div class="receipts-list">
                 {% for receipt in receipts %}
-                    <div class="product-item br-15" style="width: 315px;">
-                        <div class="product-item-image" style="width: 290px">
+                    <div class="product-item br-15" style="width: 280px;">
+                        <div class="product-item-image" style="width: 255px">
                             <a href="{% url 'detail_receipt' slug=receipt.slug %}" class="link"></a>
                                 <img style="    width: 100%;
     height: 100%;

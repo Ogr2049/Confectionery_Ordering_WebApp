@@ -59,4 +59,33 @@
 		</div>
 	</div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+	const addCart = (product_id) => (
+        $.ajax({
+            type: "GET",
+            url: "{% url 'add_cart' %}",
+            data: {
+                'product_id': product_id
+            },
+            success: (res) => {
+                 addCartProduct.textContent = "В КОРЗИНЕ";
+                                addCartProduct.href = "/cart/";
+            },
+            error: (err) => {
+                console.log(err);
+            }
+        })
+    );
+	var addCartProduct = document.querySelector("#add-product");
+	var countHeader = document.querySelector(".count-header");
+
+	addCartProduct.onclick = function () {
+        if (addCartProduct.textContent !== "В КОРЗИНЕ") {
+           addCart({{ product.id }});
+        }
+		countHeader.textContent = Number(countHeader.textContent) + 1;
+	}
+</script>
+
 {% endblock content %}

@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% load static %}
+{% load main_tags %}
+
+{% block title %}Оформление заказа - Pie&Cake{% endblock title %}
+
+{% block content %}
+<div id="breadcrumbs">
+		<div class="wrp">
+			<ul class="breadcrumbs">
+				<li>
+					<a href="{% url 'index' %}" class="light">Главная</a>
+				</li>
+				<li>
+					<span class="light">Оформление заказа</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+<section id="cart-block">
+		<div class="wrp">
+			<form method="post" id="checkout-form" enctype="multipart/form-data">{% csrf_token %}
+			<div class="order-block">
+				<div class="order-left">
+					<div class="order-header">
+						<h1 class="h2">Оформление заказа</h1>
+					</div>
+					<div class="order-inputs">
+						<input type="text" style="font-size: 16px;" required class="input required" {% if request.user.is_authenticated %}value="{{ request.user.full_name }}"{% endif %} name="name" placeholder="Ваше имя">
+						<input type="tel" minlength="8" style="font-size: 16px;"  required class="input required" {% if request.user.is_authenticated %}value="{{ request.user.phone }}"{% endif %} name="phone" placeholder="Телефон">
+						<input type="email" style="font-size: 16px;"  required class="input required" name="email" {% if request.user.is_authenticated %}value="{{ request.user.email }}"{% endif %} placeholder="Почта">
+					</div>
+					<div class="order-select-block">
+						<p>Доставка</p>
+						<div style="position: relative;" id="order-catalog">
+							<div class="selector-button" style="    background: none;
+    padding-left: 20px;width:50%;">
+								<span class="name">Не выбран способ</span>
+							</div>
+							<div class="selector-list" style="width:50%;">
+								<label>
+									<input type="radio" name="delivery-type" required data-name="Курьером" value="courier">
+									<span style="display: flex; justify-content: space-between;"><p>Курьером</p><p>  300 ₽</p></span>
+								</label>
+								<label>
+									<input type="radio" name="delivery-type" required data-name="Пункт выдачи СДЭК" value="pvz">
+									<span style="display: flex; justify-content: space-between;"><p>Пункт выдачи СДЭК</p><p>  0 ₽</p></span>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="order-inputs" id="delivery-block" style="position: relative;">
+						<input type="text" class="input calendar-input second-input" name="date-delivery" placeholder="Выберите дату доставки" required>
+						<input id="delivery-inputs" style="font-size: 16px;display: none;"  type="text" class="input second-input" name="address" placeholder="Введите полный адрес">
+						<select class="input second-input" style="display: none;" name="pvz" id="select-pvz">
+							<option selected>Выберите пункт выдачи</option>
+							<option value="ул. Бекетова, 13К">ул. Бекетова, 13К</option>
+							<option value="ул. Октябрьской Революции, 37">ул. Октябрьской Революции, 37</option>
+							<option value="пр-т. Кораблестроителей, 2">пр-т. Кораблестроителей, 2</option>
+							<option value="ул. Ильинская, 81">ул. Ильинская, 81</option>
+							<option value="Волжская набережная, 16">Волжская набережная, 16</option>
+							<option value="ул. Ларина, 26к1">ул. Ларина, 26к1</option>
+							<option value="пл. Маршала Жукова, 7">пл. Маршала Жукова, 7</option>
+							<option value="ул. Романтиков, 5, П8">ул. Романтиков, 5, П8</option>
+							<option value="ул. Усольская, 49">ул. Усольская, 49</option>
+							<option value="ул. Героя Смирнова, 17">ул. Героя Смирнова, 17</option>
+							<option value="ул.Медицинская, 12, пом.3">ул.Медицинская, 12, пом.3</option>
+						</select>
+					</div>
+					<textarea name="comment" style="font-size: 16px;" placeholder="Комментарий: оставьте у порога..." rows="4" class="input"></textarea>
+					<div class="order-select-block">
+						<p>Оплата</p>
+						<label class="radio-btn">
+							<input type="radio" value="cash" name="buy" checked>
+							<span>Оплата при получении</span>
+						</label>
+						<label class="radio-btn">
+							<input type="radio" value="online" name="buy">
+							<span>Оплата онлайн</span>
+						</label>
+					</div>
+
+				</div>
+				<div class="cart-total">
+					<div class="cart-links">
+						<a href="{% url 'delivery' %}" class="light">Оплата и доставка →</a>
+					</div>
+					<div class="cart-total-info">
+						<p class="light">
+							<span>Товаров в корзине:</span>
+							<span id="quantity-all">{{ cart.quantity_all }}</span>
+						</p>
+						<p class="light">
+							<span>Сумма товаров:</span>
+							<span>{{ cart.total_price }} ₽</span>
+						</p>
+						<p class="light">
+							<span id="delivery-name">Доставка:</span>
+							<span id="delivery-price">0 ₽</span>
+						</p>
+						<p>
+							<span>Итого:</span>
+							<span><span id="total-price">{{ cart.total_price }}</span> ₽</span>
+						</p>
+					</div>
+					<button type="submit" class="blue-button br-10" style="    display: block;
+    text-align: center;
+    margin-top: 20px; width:100%;">Оформить</button>
+					<a href="{% url 'cart' %}" style="    display: block;
+    text-align: center;
+    margin-top: 10px;width: 100%;margin-left:0;" class="header-white-button br-10 light">Назад в корзину</a>
+					<p class="order-alert light">
+						Нажимая на кнопку, вы соглашаетесь с политикой<br>
+						конфиденциальности и принимаете условия продажи
+					</p>
+				</div>
+			</div>
+				</form>
+		</div>
+	</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script src="{% static 'node_modules/lightpick/lightpick.js' %}"></script>
+<script>
+	function addDays(date, days) {
+  		var result = new Date(date);
+  		result.setDate(result.getDate() + days);
+  		return result;
+	}
+
+    var picker = new Lightpick({
+    	field: document.querySelector('.calendar-input'),
+    	lang: "ru",
+    	minDate: new Date(),
+    	maxDate: addDays(new Date(), 7),
+    	onSelect: function(start, end){
+    	    var str = '';
+    	    str += start ? start.format('DD.MM.YYYY') + '' : '';
+    	    str += end ? end.format('DD.MM.YYYY') : '';
+    	    console.log(str)
+    	    var inputDate = document.querySelector(".calendar-input");
+    	    let formatDate = new Date(start.format('DD.MM.YYYY'));
+    	    inputDate.value = str;
+    	}
+	});
+    let dataValueStr2 = document.querySelector(".calendar-input");
+    let today = new Date();
+    dataValueStr2.value = today.toLocaleDateString();
+  </script>
+
+
+<script>
+	var deliveryRadios = document.querySelectorAll(`input[name="delivery-type"]`);
+	var addressInput = document.querySelector("#delivery-inputs");
+	var pvzInput = document.querySelector("#select-pvz");
+	var deliveryTotal = document.querySelector("#delivery-price");
+	var deliveryName = document.querySelector("#delivery-name");
+	var totalPrice = document.querySelector("#total-price");
+
+	for (let radio of deliveryRadios) {
+		radio.onchange = function () {
+			if (radio.value === "courier") {
+				totalPrice.textContent = parseFloat(totalPrice.textContent) + 300;
+				addressInput.style.display = "block";
+				pvzInput.style.display = "none";
+				deliveryTotal.textContent = "300 ₽";
+				deliveryName.textContent = "Курьер:";
+			} else {
+				if (addressInput.style.display === "block") {
+					totalPrice.textContent = Number(totalPrice.textContent) - 300;
+				};
+				addressInput.style.display = "none";
+				pvzInput.style.display = "block";
+				deliveryTotal.textContent = "0 ₽";
+				deliveryName.textContent = "Пункт выдачи СДЭК:";
+			}
+		}
+	}
+</script>
+
+{% endblock content %}

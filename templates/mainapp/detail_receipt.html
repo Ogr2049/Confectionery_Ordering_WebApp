@@ -28,7 +28,9 @@
           <p style="margin-bottom: 30px;text-align: center;    font-size: 28px;" class="h2">{{ receipt.title }} от {{ receipt.author.full_name }}</p>
           <div class="receipt-details">
               <img class="receipt-cover" src="{{ receipt.cover.url }}" alt="{{ receipt.title }}">
-              <p>{{ receipt.description|linebreaks }}</p>
+              <div class="receipt-description">
+                <p>{{ receipt.description|linebreaks }}</p>
+              </div>
               {% if request.user == receipt.author %}
                 <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
                     <a href="{% url 'edit_receipt' id=receipt.id %}" class="blue-button br-10">Редактировать</a>
