@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
@@ -98,7 +99,7 @@ class ConstructorView(CartMixin, View):
     def post(self, request, *args, **kwargs):
         data = request.POST
         print(data)
-        new_cake = models.Cake.objects.create(full_name=data.get("name"), email=data.get("email"), phone=data.get("phone"),
+        new_cake = models.Cake.objects.create(full_name=data.get("name"), email=data.get("email"), address=data.get("address"), phone=data.get("phone"),
                                               amount=89100, comment=data.get("comment"), date_delivery=data.get("date-delivery"),
                                               time_delivery=data.get("time-delivery"), type_cake=data.get("specie-type"), form=data.get("form"))
         for key, value in data.items():
@@ -121,7 +122,38 @@ class ConstructorView(CartMixin, View):
                 new_cake.floors.add(new_floor)
 
         new_cake.save()
+        request.user.cakes.add(new_cake)
+        request.user.save()
         request.session["new_cake"] = new_cake.id
+        sostav = ""
+        for floor in new_cake.floors.all():
+            sostav += f"Ярус {floor.floor}<br>"
+            for ing in floor.ingredients.all():
+                sostav += f"{ing.title}. Стоимость: {ing.price} р.<br><br>"
+        send_mail(
+            f"Новый заказ на торт на сайте Pie&Cake!",
+            "",
+            'robot@cake-pie-store.ru',
+            ["lautariano777@gmail.com", "o.grigoriev2@yandex.ru"],
+            html_message=f'''
+                                                <p><b>Новый заказ на торт №{new_cake.id}</b><br>
+                                                    <br>
+                                                    Данные клиента:<br>
+                                                    Имя: {new_cake.full_name}<br>
+                                                    Номер телефона: {new_cake.phone}<br>
+                                                    Почта: {new_cake.email}<br><br>
+                                                    <b>Информация о заказе:</b><br>
+                                                    Стоимость: <b>{new_cake.amount} рублей</b><br>
+                                                    {new_cake.address}. {new_cake.date_delivery}. Время: {new_cake.time_delivery}<br>
+                                                    Комментарий: {new_cake.comment}<br>
+                                                    Тип торта: {new_cake.get_type_cake_display()}<br>
+                                                    Форма торта: {new_cake.get_form_display()}<br>
+                                                    <br><br>
+                                                    <b>Состав заказа:</b><br>
+                                                    {sostav}
+                                                </p>
+                                              '''
+        )
         return redirect("success_cake")
 
 

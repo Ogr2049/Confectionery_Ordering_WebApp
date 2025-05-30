@@ -1,10 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load static %}
+{% load main_tags %}
 
-</body>
-</html>
+{% block title %}Заказ успешно оформлен - Pie&Cake{% endblock title %}
+
+{% block content %}
+  <section id="success-block">
+      <div class="wrp">
+          <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <h1 class="h2" style="text-align: center;">Заказ успешно оформлен</h1>
+            <img src="{% static 'img/success.png' %}" class="success-img" alt="success">
+              <a href="{% url 'orders' %}" class="blue-button br-10" style="    display: block;
+    width: max-content;
+    margin-bottom: 30px; margin-top: 50px;">Перейти в историю заказов</a>
+          </div>
+
+      </div>
+  </section>
+{% endblock content %}

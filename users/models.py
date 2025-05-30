@@ -34,6 +34,7 @@ class MyUserManager(BaseUserManager):
 class User(AbstractBaseUser):
 
     orders = models.ManyToManyField("products.Order", verbose_name="Заказы", related_name="user", blank=True)
+    cakes = models.ManyToManyField("mainapp.Cake", verbose_name="Заказы тортов", related_name="user", blank=True)
     cart = models.OneToOneField("products.Cart", verbose_name="Корзина", related_name="user", on_delete=models.SET_NULL, blank=True, null=True)
 
     full_name = models.CharField(verbose_name="ФИО", max_length=100, blank=True, null=True)

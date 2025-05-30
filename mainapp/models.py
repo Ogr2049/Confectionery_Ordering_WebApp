@@ -86,6 +86,7 @@ class Cake(models.Model):
     phone = models.CharField(verbose_name="Номер телефона", max_length=20, blank=True, null=True)
     comment = models.TextField(verbose_name="Комментарий", blank=True, null=True)
     amount = models.FloatField(verbose_name="Цена заказа", default=1)
+    address = models.CharField(verbose_name="Адрес", blank=True, null=True, max_length=300)
     date_delivery = models.CharField(verbose_name="Дата доставки", max_length=20, blank=True, null=True)
     time_delivery = models.CharField(verbose_name="Время доставки", max_length=20, blank=True, null=True)
 

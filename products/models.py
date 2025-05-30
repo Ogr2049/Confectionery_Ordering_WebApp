@@ -96,7 +96,7 @@ class Delivery(models.Model):
     def __str__(self):
         if self.address:
             return f"Доставка на {self.address}"
-        return f"Доставка - {self.pvz}"
+        return f"Доставка - {self.pvz} (Пункт выдачи)"
 
     class Meta:
         verbose_name = "Доставка"

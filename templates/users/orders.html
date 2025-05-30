@@ -36,9 +36,59 @@
 					</div>
 				</div>
 			</div>
-			<div class="cabinet-main" style="{% if not request.user.orders.all %}    background: inherit;
+			<div class="cabinet-main" style="{% if not request.user.orders.all and not request.user.cakes.all %}    background: inherit;
     border: none;{% endif %}">
-				{% if request.user.orders.all %}
+				{% if request.user.cakes.all %}
+				{% for cake in request.user.cakes.all %}
+					<div class="orders-item in-progress">
+						<div class="orders-item-button active">
+							<img class="icon" src="{% static 'img/order-item-icon4.svg' %}" alt="order-icon">
+							<p class="name">
+								Заказ на торт №{{ cake.id }}
+								<span class="light">{{ cake.date_order.date }}</span>
+							</p>
+							<p class="price">{{ cake.amount }}р</p>
+						</div>
+						<div class="orders-item-info">
+							<div class="lk-order-info-list">
+                    	        {% for floor in cake.floors.all %}
+									<p style="margin-left: 20px;">Ярус {{ floor.floor }}</p>
+									{% for ing in floor.ingredients.all %}
+										<div class="lk-order-info-list-item">
+											<div class="img">
+												{% if ing.cover %}<img src="{{ ing.cover.url }}" alt="ing">{% endif %}
+											</div>
+											<p class="name">
+												{{ ing.title }}
+											</p>
+											<p class="price" style="margin-left: 30px;">
+												{{ ing.price }} ₽
+											</p>
+										</div>
+									{% endfor %}
+                    	        {% endfor %}
+							</div>
+							<div class="lk-order-info-bottom">
+								<div class="cart-right-info">
+									<p>
+										<span>Ингредиенты к торту:</span>
+										<span>{{ cake.amount }} ₽</span>
+									</p>
+										<p class="light">
+											<span>ДОСТАВКА (Курьер):</span>
+											<span>0 ₽</span>
+										</p>
+										<p class="delivery-adress">
+										    {{ cake.address }}<br>
+                    	                    {{ cake.date_delivery }}. Время: {{ cake.time_delivery }}
+									    </p>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+				{% endif %}
+				{% if request.user.orders.all or request.user.cakes.all %}
 				{% for order in request.user.orders.all %}
 					<div class="orders-item in-progress">
 					<div class="orders-item-button active">

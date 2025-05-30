@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
@@ -198,6 +199,32 @@ class OrderView(CartMixin, View):
         request.user.orders.add(new_order)
         request.user.save()
         request.session["new_order"] = new_order.id
+        sostav = ""
+        for cart_product in new_order.products.all():
+            sostav += f"{cart_product.product.title} {cart_product.quantity} шт. Стоимость: {cart_product.total_price} р.<br>"
+        send_mail(
+            f"Новый заказ на сайте Pie&Cake!",
+            "",
+            'robot@cake-pie-store.ru',
+            ["lautariano777@gmail.com", "o.grigoriev2@yandex.ru"],
+            html_message=f'''
+                                        <p><b>Новый заказ №{new_order.id}</b><br>
+                                            <br>
+                                            Данные клиента:<br>
+                                            Имя: {new_order.full_name}<br>
+                                            Номер телефона: {new_order.phone}<br>
+                                            Почта: {new_order.email}<br<br>
+                                            <b>Информая о заказе:</b><br>
+                                            Стоимость: <b>{new_order.amount} рублей</b><br>
+                                            {new_order.delivery}<br>
+                                            Способ оплаты: {new_order.get_type_pay_display()}<br>
+                                            Комментарий: {new_order.comment}<br>
+                                            <br><br>
+                                            <b>Состав заказа:</b><br>
+                                            {sostav}
+                                        </p>
+                                      '''
+        )
         return redirect("success")
 
 class SuccessView(CartMixin, View):
