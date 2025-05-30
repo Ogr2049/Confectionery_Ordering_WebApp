@@ -12,4 +12,5 @@ urlpatterns = [
     path("update_like/", views.update_like, name="update_like"),
     path("edit_receipt/<int:id>", views.EditReceiptView.as_view(), name="edit_receipt"),
     path("constructor/", views.ConstructorView.as_view(), name="constructor"),
+    path("success_cake/", views.SuccessConstructorView.as_view(), name="success_cake")
 ]

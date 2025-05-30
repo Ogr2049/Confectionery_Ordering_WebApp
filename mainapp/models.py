@@ -57,3 +57,47 @@ class Ingredient(models.Model):
     class Meta:
         verbose_name="Ингредиент"
         verbose_name_plural="Ингредиенты"
+
+class Floor(models.Model):
+
+    floor = models.IntegerField(verbose_name="Номер яруса", blank=True, null=True)
+    ingredients = models.ManyToManyField(Ingredient, verbose_name="Ингредиенты", blank=True, related_name="floors")
+
+    class Meta:
+        verbose_name="Ярус торта"
+        verbose_name_plural="Ярусы торта"
+
+
+TYPE_CAKE = (
+    ("one", "Одноярусный"),
+    ("more", "Ярусный"),
+)
+
+FORM_CAKE = (
+    ("circle", "Круг"),
+    ("hexagon", "Шестигранник"),
+    ("square", "Квадрат"),
+)
+
+class Cake(models.Model):
+
+    full_name = models.CharField(verbose_name="ФИО", max_length=100, blank=True, null=True)
+    email = models.EmailField(verbose_name="Почта", blank=True, null=True)
+    phone = models.CharField(verbose_name="Номер телефона", max_length=20, blank=True, null=True)
+    comment = models.TextField(verbose_name="Комментарий", blank=True, null=True)
+    amount = models.FloatField(verbose_name="Цена заказа", default=1)
+    date_delivery = models.CharField(verbose_name="Дата доставки", max_length=20, blank=True, null=True)
+    time_delivery = models.CharField(verbose_name="Время доставки", max_length=20, blank=True, null=True)
+
+    type_cake = models.CharField(verbose_name="Тип торта", choices=TYPE_CAKE, blank=True, max_length=30)
+    floors = models.ManyToManyField(Floor, verbose_name="Ярусы", blank=True, related_name="cake")
+    form = models.CharField(verbose_name="Форма торта", choices=FORM_CAKE, blank=True, null=True, max_length=40)
+
+    date_order = models.DateTimeField(verbose_name="Дата заказа", auto_now_add=True)
+
+    def __str__(self):
+        return self.full_name
+
+    class Meta:
+        verbose_name="Заказ торта"
+        verbose_name_plural="Заказ тортов"

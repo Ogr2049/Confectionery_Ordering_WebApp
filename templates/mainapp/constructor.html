@@ -8,7 +8,7 @@
 <div id="constructor">
     <div class="wrp">
         <div class="constructor">
-            <form method="post" enctype="multipart/form-data"> {% csrf_token %}
+            <form id="cake-form" method="post" enctype="multipart/form-data"> {% csrf_token %}
             <h1 class="h2" style="text-align: center; color: #025252;margin-bottom: 50px;">Создайте торт своей мечты!</h1>
             <div class="specie-list">
                 <p class="specie-title">Какой торт хотели бы заказать?</p>
@@ -52,7 +52,7 @@
                         {% if category.title == "Начинка" %}
                             {% for ing in category.ingredients.all %}
                                 <div class="specie-item">
-                                    <input type="radio" name="{{ category.slug }}-1" class="radio-specie" value="{{ ing.id }}" data-price="{{ ing.price }}">
+                                    <input type="radio" name="floor-{{ category.slug }}-1" class="radio-specie" value="{{ ing.id }}" data-price="{{ ing.price }}">
                                     <div class="specie-image" style="background-image: url({{ ing.cover.url }});"></div>
                                     <p class="specie-text">{{ ing.title }}</p>
                                 </div>
@@ -67,7 +67,7 @@
 					        	<p>{{ category.title }}</p>
                                 {% for ing in category.ingredients.all %}
 					        	    <label class="radio-btn">
-					        	    	<input type="radio" value="{{ ing.id }}" name="{{ category.slug }}-1" data-price="{{ ing.price }}">
+					        	    	<input {% if category.title == 'Ягоды' or category.title == 'Декор' %}type="checkbox"{% else %}type="radio"{% endif %} value="{{ ing.id }}" name="floor-{{ category.slug }}-1" data-price="{{ ing.price }}">
 					        	    	<span>{{ ing.title }}</span>
 					        	    </label>
                                 {% endfor %}
@@ -83,7 +83,7 @@
                         {% if category.title == "Начинка" %}
                             {% for ing in category.ingredients.all %}
                                 <div class="specie-item">
-                                    <input type="radio" name="{{ category.slug }}-2" class="radio-specie" value="{{ ing.id }}" data-price="{{ ing.price }}">
+                                    <input type="radio" name="floor-{{ category.slug }}-2" class="radio-specie" value="{{ ing.id }}" data-price="{{ ing.price }}">
                                     <div class="specie-image" style="background-image: url({{ ing.cover.url }});"></div>
                                     <p class="specie-text">{{ ing.title }}</p>
                                 </div>
@@ -98,7 +98,7 @@
 					        	<p>{{ category.title }}</p>
                                 {% for ing in category.ingredients.all %}
 					        	    <label class="radio-btn">
-					        	    	<input type="radio" value="{{ ing.id }}" name="{{ category.slug }}-2" data-price="{{ ing.price }}">
+					        	    	<input {% if category.title == 'Ягоды' or category.title == 'Декор' %}type="checkbox"{% else %}type="radio"{% endif %} value="{{ ing.id }}" name="floor-{{ category.slug }}-2" data-price="{{ ing.price }}">
 					        	    	<span>{{ ing.title }}</span>
 					        	    </label>
                                 {% endfor %}
@@ -114,7 +114,7 @@
                         {% if category.title == "Начинка" %}
                             {% for ing in category.ingredients.all %}
                                 <div class="specie-item">
-                                    <input type="radio" name="{{ category.slug }}-3" class="radio-specie" value="{{ ing.id }}" data-price="{{ ing.price }}">
+                                    <input type="radio" name="floor-{{ category.slug }}-3" class="radio-specie" value="{{ ing.id }}" data-price="{{ ing.price }}">
                                     <div class="specie-image" style="background-image: url({{ ing.cover.url }});"></div>
                                     <p class="specie-text">{{ ing.title }}</p>
                                 </div>
@@ -129,7 +129,7 @@
 					        	<p>{{ category.title }}</p>
                                 {% for ing in category.ingredients.all %}
 					        	    <label class="radio-btn">
-					        	    	<input type="radio" value="{{ ing.id }}" name="{{ category.slug }}-3" data-price="{{ ing.price }}">
+					        	    	<input {% if category.title == 'Ягоды' or category.title == 'Декор' %}type="checkbox"{% else %}type="radio"{% endif %} value="{{ ing.id }}" name="floor-{{ category.slug }}-3" data-price="{{ ing.price }}">
 					        	    	<span>{{ ing.title }}</span>
 					        	    </label>
                                 {% endfor %}
@@ -145,7 +145,7 @@
                         {% if category.title == "Начинка" %}
                             {% for ing in category.ingredients.all %}
                                 <div class="specie-item">
-                                    <input type="radio" name="{{ category.slug }}-4" class="radio-specie" value="{{ ing.id }}" data-price="{{ ing.price }}">
+                                    <input type="radio" name="floor-{{ category.slug }}-4" class="radio-specie" value="{{ ing.id }}" data-price="{{ ing.price }}">
                                     <div class="specie-image" style="background-image: url({{ ing.cover.url }});"></div>
                                     <p class="specie-text">{{ ing.title }}</p>
                                 </div>
@@ -160,7 +160,7 @@
 					        	<p>{{ category.title }}</p>
                                 {% for ing in category.ingredients.all %}
 					        	    <label class="radio-btn">
-					        	    	<input type="radio" value="{{ ing.id }}" name="{{ category.slug }}-4" data-price="{{ ing.price }}">
+					        	    	<input {% if category.title == 'Ягоды' or category.title == 'Декор' %}type="checkbox"{% else %}type="radio"{% endif %} value="{{ ing.id }}" name="floor-{{ category.slug }}-4" data-price="{{ ing.price }}">
 					        	    	<span>{{ ing.title }}</span>
 					        	    </label>
                                 {% endfor %}
@@ -173,17 +173,17 @@
                 <p class="specie-title">Какой формы будет торт?</p>
                 <div class="specie-items">
                     <div class="specie-item">
-                        <input type="radio" name="form" value="Круг" class="radio-specie" checked>
+                        <input type="radio" name="form" value="circle" class="radio-specie" checked>
                         <div class="specie-image" style="background-image: url({% static 'Forms/Circle.png' %});"></div>
                         <p class="specie-text">Круг</p>
                     </div>
                     <div class="specie-item">
-                        <input type="radio" name="form" value="Квадрат" class="radio-specie">
+                        <input type="radio" name="form" value="square" class="radio-specie">
                         <div class="specie-image" style="background-image: url({% static 'Forms/Square.png' %});"></div>
                         <p class="specie-text">Квадрат</p>
                     </div>
                     <div class="specie-item">
-                        <input type="radio" name="form" value="Шестигранник" class="radio-specie">
+                        <input type="radio" name="form" value="hexagon" class="radio-specie">
                         <div class="specie-image" style="background-image: url({% static 'Forms/Hexagon.png' %});"></div>
                         <p class="specie-text">Шестигранник</p>
                     </div>
@@ -202,13 +202,14 @@
 					</div>
 					<div class="order-inputs" id="delivery-block" style="position: relative;">
 						<input type="text" class="input calendar-input second-input" name="date-delivery" placeholder="Выберите дату доставки" required>
-                        <input style="font-size: 16px;"  type="text" class="input second-input" name="time-delivery" placeholder="Время получения заказа">
+                        <input style="font-size: 16px;"  type="text" class="input second-input" name="time-delivery" placeholder="Время получения заказа" required>
 					</div>
-                    <input id="delivery-inputs" style="font-size: 16px;"  type="text" class="input second-input" name="address" placeholder="Введите полный адрес">
-                    <h1 class="h2" style="color: #025252; font-size: 25px; margin-top: 30px;">Стоимость торта составляет <span id="total-price" style="font-weight: bold;">89100 ₽</span></h1>
-                    <div style="display: flex; justify-content: center;">
-                        <button type="submit" class="blue-button br-10" style="    display: block;
+                    <input id="delivery-inputs" style="font-size: 16px;"  type="text" class="input second-input" name="address" placeholder="Введите полный адрес" required>
+                    <h1 class="h2" style="color: #025252; font-size: 25px; margin-top: 30px;">Стоимость торта составляет <span id="total-price" style="font-weight: bold;">89100</span> <span style="font-weight: bold;">₽</span></h1>
+                    <div style="display: flex; justify-content: center;flex-direction: column; align-items: center;">
+                        <button id="cake-button" type="button" class="blue-button br-10" style="    display: block;
     margin-top: 10px;">Оформить заказ</button>
+                        <p id="error-cake" style="text-align: center; color: red;display: none; margin-top: 20px;">Не введены все поля/Не отмечены все галочки у ярусов</p>
                     </div>
 				</div>
 			</div>
@@ -279,6 +280,77 @@
             }
         }
     }
+
+    var ingPrices = document.querySelectorAll("input[data-price]");
+    var totalPrice = document.querySelector("#total-price");
+
+    for (let input of ingPrices) {
+        input.onchange = function () {
+            if (input.type === "radio") {
+                for (let input2 of document.querySelectorAll(`input[name="${input.name}"]`)) {
+                    if (input2.classList.contains("price-checked")) {
+                        totalPrice.textContent = Number(totalPrice.textContent) - Number(input2.getAttribute("data-price"));
+                        input2.classList.remove("price-checked");
+                        break;
+                    }
+                }
+                input.classList.add("price-checked");
+                totalPrice.textContent = Number(totalPrice.textContent) + Number(input.getAttribute("data-price"));
+            } else {
+                if (input.checked) {
+                    input.classList.add("price-checked");
+                    totalPrice.textContent = Number(totalPrice.textContent) + Number(input.getAttribute("data-price"));
+                } else {
+                    input.classList.remove("price-checked");
+                    totalPrice.textContent = Number(totalPrice.textContent) - Number(input.getAttribute("data-price"));
+                }
+            }
+        }
+    }
+
+    var cakeButton = document.querySelector("#cake-button");
+    var formCake = document.querySelector("#cake-form");
+    var cakeError = document.querySelector("#error-cake");
+
+    cakeButton.onclick = function () {
+        for (let input of document.querySelectorAll("input[required]")) {
+            if (!input.value) {
+                cakeError.style.display = "block";
+                return false;
+            }
+        }
+        let species = document.querySelectorAll("div[data-specie]");
+        for (let list of species) {
+            if (!list.classList.contains("specie-inactive")) {
+                for (let items of list.querySelectorAll(".specie-items")) {
+                    let flag = false;
+                    for (let input of items.querySelectorAll("input")) {
+                        if (input.checked) {
+                            flag = true;
+                        }
+                    }
+                    if (!flag) {
+                        cakeError.style.display = "block";
+                        return false;
+                    }
+                }
+                for (let items of list.querySelectorAll(".order-select-block")) {
+                    let flag = false;
+                    for (let input of items.querySelectorAll("input")) {
+                        if (input.checked) {
+                            flag = true;
+                        }
+                    }
+                    if (!flag) {
+                        cakeError.style.display = "block";
+                        return false;
+                    }
+                }
+            }
+        }
+        cakeError.style.display = "none";
+        formCake.submit();
+    };
 </script>
 {% endblock content %}
 

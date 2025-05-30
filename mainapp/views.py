@@ -96,6 +96,37 @@ class ConstructorView(CartMixin, View):
         return render(request, "mainapp/constructor.html", {"ing_categories": ing_categories})
 
     def post(self, request, *args, **kwargs):
-        pass
+        data = request.POST
+        print(data)
+        new_cake = models.Cake.objects.create(full_name=data.get("name"), email=data.get("email"), phone=data.get("phone"),
+                                              amount=89100, comment=data.get("comment"), date_delivery=data.get("date-delivery"),
+                                              time_delivery=data.get("time-delivery"), type_cake=data.get("specie-type"), form=data.get("form"))
+        for key, value in data.items():
+            if key.split("-")[0] == "floor":
+                if new_cake.floors.filter(floor=int(key.split("-")[-1])).exists():
+                    continue
+
+                new_floor = models.Floor.objects.create(floor=int(key.split("-")[-1]))
+                for ing_id in data.getlist(key):
+                    ingredient_default = models.Ingredient.objects.get(id=int(ing_id))
+                    new_floor.ingredients.add(ingredient_default)
+                    new_cake.amount += ingredient_default.price
+                for k,v in data.items():
+                    if k.split("-")[0] == "floor" and int(k.split("-")[-1]) == new_floor.floor and v != value:
+                        for ing_id in data.getlist(k):
+                            ing = models.Ingredient.objects.get(id=int(ing_id))
+                            new_floor.ingredients.add(ing)
+                            new_cake.amount += ing.price
+                new_floor.save()
+                new_cake.floors.add(new_floor)
+
+        new_cake.save()
+        request.session["new_cake"] = new_cake.id
+        return redirect("success_cake")
 
 
+class SuccessConstructorView(CartMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        cake = models.Cake.objects.get(id=request.session.get("new_cake"))
+        return render(request, "mainapp/success_cake.html", {"cake": cake})
