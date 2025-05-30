@@ -1,0 +1,288 @@
+{% extends "base.html" %}
+{% load static %}
+{% load main_tags %}
+
+{% block title %}Создайте торт своей мечты!{% endblock title %}
+
+{% block content %}
+<div id="constructor">
+    <div class="wrp">
+        <div class="constructor">
+            <form method="post" enctype="multipart/form-data"> {% csrf_token %}
+            <h1 class="h2" style="text-align: center; color: #025252;margin-bottom: 50px;">Создайте торт своей мечты!</h1>
+            <div class="specie-list">
+                <p class="specie-title">Какой торт хотели бы заказать?</p>
+                <div class="specie-items">
+                    <div class="specie-item">
+                        <input type="radio" name="specie-type" value="one" class="radio-specie" checked>
+                        <div class="specie-image" style="background-image: url({% static 'Levels/1.png' %});"></div>
+                        <p class="specie-text">Одноярусный</p>
+                    </div>
+                    <div class="specie-item">
+                        <input type="radio" name="specie-type" value="more" class="radio-specie">
+                        <div class="specie-image" style="background-image: url({% static 'Levels/Many.png' %});"></div>
+                        <p class="specie-text">Ярусный</p>
+                    </div>
+                </div>
+            </div>
+            <div class="specie-list" id="quantity-specie" style="display: none;">
+                <p class="specie-title">Выберите количество ярусов</p>
+                <div class="specie-items">
+                    <div class="specie-item">
+                        <input type="radio" name="quantity-specie" class="radio-specie" value="2" checked>
+                        <div class="specie-image" style="background-image: url({% static 'Levels/2.png' %});"></div>
+                        <p class="specie-text">Два яруса</p>
+                    </div>
+                    <div class="specie-item">
+                        <input type="radio" name="quantity-specie" class="radio-specie" value="3">
+                        <div class="specie-image" style="background-image: url({% static 'Levels/3.png' %});"></div>
+                        <p class="specie-text">Три яруса</p>
+                    </div>
+                    <div class="specie-item">
+                        <input type="radio" name="quantity-specie" class="radio-specie" value="4">
+                        <div class="specie-image" style="background-image: url({% static 'Levels/4.png' %});"></div>
+                        <p class="specie-text">Четыре яруса</p>
+                    </div>
+                </div>
+            </div>
+            <div class="specie-list" data-specie="1">
+                <p class="specie-title">Начинка (нижнего яруса):</p>
+                <div class="specie-items">
+                    {% for category in ing_categories %}
+                        {% if category.title == "Начинка" %}
+                            {% for ing in category.ingredients.all %}
+                                <div class="specie-item">
+                                    <input type="radio" name="{{ category.slug }}-1" class="radio-specie" value="{{ ing.id }}" data-price="{{ ing.price }}">
+                                    <div class="specie-image" style="background-image: url({{ ing.cover.url }});"></div>
+                                    <p class="specie-text">{{ ing.title }}</p>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="specie-categories">
+                    {% for category in ing_categories %}
+                        {% if category.title != "Начинка" %}
+                            <div class="order-select-block">
+					        	<p>{{ category.title }}</p>
+                                {% for ing in category.ingredients.all %}
+					        	    <label class="radio-btn">
+					        	    	<input type="radio" value="{{ ing.id }}" name="{{ category.slug }}-1" data-price="{{ ing.price }}">
+					        	    	<span>{{ ing.title }}</span>
+					        	    </label>
+                                {% endfor %}
+					        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="specie-list specie-inactive" data-specie="2">
+                <p class="specie-title">Начинка второго яруса:</p>
+                <div class="specie-items">
+                    {% for category in ing_categories %}
+                        {% if category.title == "Начинка" %}
+                            {% for ing in category.ingredients.all %}
+                                <div class="specie-item">
+                                    <input type="radio" name="{{ category.slug }}-2" class="radio-specie" value="{{ ing.id }}" data-price="{{ ing.price }}">
+                                    <div class="specie-image" style="background-image: url({{ ing.cover.url }});"></div>
+                                    <p class="specie-text">{{ ing.title }}</p>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="specie-categories">
+                    {% for category in ing_categories %}
+                        {% if category.title != "Начинка" %}
+                            <div class="order-select-block">
+					        	<p>{{ category.title }}</p>
+                                {% for ing in category.ingredients.all %}
+					        	    <label class="radio-btn">
+					        	    	<input type="radio" value="{{ ing.id }}" name="{{ category.slug }}-2" data-price="{{ ing.price }}">
+					        	    	<span>{{ ing.title }}</span>
+					        	    </label>
+                                {% endfor %}
+					        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="specie-list specie-inactive" data-specie="3">
+                <p class="specie-title">Начинка третьего яруса:</p>
+                <div class="specie-items">
+                    {% for category in ing_categories %}
+                        {% if category.title == "Начинка" %}
+                            {% for ing in category.ingredients.all %}
+                                <div class="specie-item">
+                                    <input type="radio" name="{{ category.slug }}-3" class="radio-specie" value="{{ ing.id }}" data-price="{{ ing.price }}">
+                                    <div class="specie-image" style="background-image: url({{ ing.cover.url }});"></div>
+                                    <p class="specie-text">{{ ing.title }}</p>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="specie-categories ">
+                    {% for category in ing_categories %}
+                        {% if category.title != "Начинка" %}
+                            <div class="order-select-block">
+					        	<p>{{ category.title }}</p>
+                                {% for ing in category.ingredients.all %}
+					        	    <label class="radio-btn">
+					        	    	<input type="radio" value="{{ ing.id }}" name="{{ category.slug }}-3" data-price="{{ ing.price }}">
+					        	    	<span>{{ ing.title }}</span>
+					        	    </label>
+                                {% endfor %}
+					        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="specie-list specie-inactive" data-specie="4">
+                <p class="specie-title">Начинка четвертого яруса:</p>
+                <div class="specie-items">
+                    {% for category in ing_categories %}
+                        {% if category.title == "Начинка" %}
+                            {% for ing in category.ingredients.all %}
+                                <div class="specie-item">
+                                    <input type="radio" name="{{ category.slug }}-4" class="radio-specie" value="{{ ing.id }}" data-price="{{ ing.price }}">
+                                    <div class="specie-image" style="background-image: url({{ ing.cover.url }});"></div>
+                                    <p class="specie-text">{{ ing.title }}</p>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="specie-categories">
+                    {% for category in ing_categories %}
+                        {% if category.title != "Начинка" %}
+                            <div class="order-select-block">
+					        	<p>{{ category.title }}</p>
+                                {% for ing in category.ingredients.all %}
+					        	    <label class="radio-btn">
+					        	    	<input type="radio" value="{{ ing.id }}" name="{{ category.slug }}-4" data-price="{{ ing.price }}">
+					        	    	<span>{{ ing.title }}</span>
+					        	    </label>
+                                {% endfor %}
+					        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="specie-list">
+                <p class="specie-title">Какой формы будет торт?</p>
+                <div class="specie-items">
+                    <div class="specie-item">
+                        <input type="radio" name="form" value="Круг" class="radio-specie" checked>
+                        <div class="specie-image" style="background-image: url({% static 'Forms/Circle.png' %});"></div>
+                        <p class="specie-text">Круг</p>
+                    </div>
+                    <div class="specie-item">
+                        <input type="radio" name="form" value="Квадрат" class="radio-specie">
+                        <div class="specie-image" style="background-image: url({% static 'Forms/Square.png' %});"></div>
+                        <p class="specie-text">Квадрат</p>
+                    </div>
+                    <div class="specie-item">
+                        <input type="radio" name="form" value="Шестигранник" class="radio-specie">
+                        <div class="specie-image" style="background-image: url({% static 'Forms/Hexagon.png' %});"></div>
+                        <p class="specie-text">Шестигранник</p>
+                    </div>
+                </div>
+            </div>
+                <div class="order-block" style="margin-top: 30px;">
+				<div class="order-left" style="width: 100%; margin-bottom: 60px;">
+					<div style="margin-top: 10px; margin-bottom: 50px;">
+						<h1 class="h2" style="text-align: center; color: #025252;">Оформление заказа</h1>
+					</div>
+                    <textarea name="comment" style="font-size: 16px; margin-bottom: 25px;" placeholder="Комментарий/Вопрос по заказу" rows="4" class="input"></textarea>
+					<div class="order-inputs" style="margin-bottom: 25px;">
+						<input type="text" style="font-size: 16px;" required class="input required"  name="name" placeholder="Ваше имя">
+						<input type="tel" minlength="8" style="font-size: 16px;"  required class="input required"  name="phone" placeholder="Телефон">
+						<input type="email" style="font-size: 16px;"  required class="input required" name="email"  placeholder="Почта">
+					</div>
+					<div class="order-inputs" id="delivery-block" style="position: relative;">
+						<input type="text" class="input calendar-input second-input" name="date-delivery" placeholder="Выберите дату доставки" required>
+                        <input style="font-size: 16px;"  type="text" class="input second-input" name="time-delivery" placeholder="Время получения заказа">
+					</div>
+                    <input id="delivery-inputs" style="font-size: 16px;"  type="text" class="input second-input" name="address" placeholder="Введите полный адрес">
+                    <h1 class="h2" style="color: #025252; font-size: 25px; margin-top: 30px;">Стоимость торта составляет <span id="total-price" style="font-weight: bold;">89100 ₽</span></h1>
+                    <div style="display: flex; justify-content: center;">
+                        <button type="submit" class="blue-button br-10" style="    display: block;
+    margin-top: 10px;">Оформить заказ</button>
+                    </div>
+				</div>
+			</div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script src="{% static 'node_modules/lightpick/lightpick.js' %}"></script>
+<script>
+	function addDays(date, days) {
+  		var result = new Date(date);
+  		result.setDate(result.getDate() + days);
+  		return result;
+	}
+
+    var picker = new Lightpick({
+    	field: document.querySelector('.calendar-input'),
+    	lang: "ru",
+    	minDate: new Date(),
+    	onSelect: function(start, end){
+    	    var str = '';
+    	    str += start ? start.format('DD.MM.YYYY') + '' : '';
+    	    str += end ? end.format('DD.MM.YYYY') : '';
+    	    console.log(str)
+    	    var inputDate = document.querySelector(".calendar-input");
+    	    let formatDate = new Date(start.format('DD.MM.YYYY'));
+    	    inputDate.value = str;
+    	}
+	});
+    let dataValueStr2 = document.querySelector(".calendar-input");
+    let today = new Date();
+    dataValueStr2.value = today.toLocaleDateString();
+  </script>
+
+<script>
+    var typeInputs = document.querySelectorAll(`input[name="specie-type"]`);
+    var quantitySpecies = document.querySelector("#quantity-specie");
+    var speciesLists = document.querySelectorAll("div[data-specie]");
+    var quantityInputs = document.querySelectorAll('input[name="quantity-specie"]');
+
+    for (let input of typeInputs) {
+        input.onchange = function () {
+            if (input.value === "more") {
+                quantitySpecies.style.display = "block";
+                document.querySelector(`div[data-specie="2"]`).classList.remove("specie-inactive");
+            } else {
+                quantitySpecies.style.display = "none";
+                for (let specie of speciesLists) {
+                    if (specie.getAttribute("data-specie") !== "1") {
+                        specie.classList.add("specie-inactive");
+                    }
+                }
+            }
+        }
+    }
+
+    for (let quantity of quantityInputs) {
+        quantity.onchange = function () {
+            for (let specie of speciesLists) {
+                specie.classList.add("specie-inactive");
+            }
+            for (let i=0; i < Number(quantity.value); i++) {
+                console.log(speciesLists[i]);
+                speciesLists[i].classList.remove("specie-inactive");
+            }
+        }
+    }
+</script>
+{% endblock content %}
+
+
+
+
+

@@ -32,3 +32,28 @@ class Receipt(models.Model):
         verbose_name_plural="Рецепты"
 
 
+class CategoryIngredient(models.Model):
+
+    title = models.CharField(verbose_name="Название", max_length=200)
+    slug = models.CharField(verbose_name="Slug", max_length=220, blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name="Категория Ингредиента"
+        verbose_name_plural="Категории Ингредиентов"
+
+class Ingredient(models.Model):
+
+    title = models.CharField(verbose_name="Название", max_length=200)
+    category = models.ForeignKey(CategoryIngredient, verbose_name="Категория", on_delete=models.SET_NULL, blank=True, null=True, related_name="ingredients")
+    cover = models.ImageField(verbose_name="Обложка", blank=True, null=True)
+    price = models.IntegerField(verbose_name="Цена", blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name="Ингредиент"
+        verbose_name_plural="Ингредиенты"

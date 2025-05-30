@@ -88,3 +88,14 @@ def update_like(request):
     receipt.save()
     print(new_like)
     return JsonResponse({"likes_count": receipt.likes.count()})
+
+class ConstructorView(CartMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        ing_categories = models.CategoryIngredient.objects.all()
+        return render(request, "mainapp/constructor.html", {"ing_categories": ing_categories})
+
+    def post(self, request, *args, **kwargs):
+        pass
+
+

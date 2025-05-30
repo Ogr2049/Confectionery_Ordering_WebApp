@@ -1464,3 +1464,117 @@ a {
 .receipt-description p {
     margin: 0;
 }
+
+.specie-items {
+    align-items: flex-start;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: 0;
+    gap: 18px;
+    justify-content: flex-start;
+    padding-top: 7px;
+    row-gap: 22px;
+}
+
+.specie-item {
+    width: calc(25% - 13.5px);
+    cursor: pointer;
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-bottom: 0;
+    vertical-align: top;
+}
+
+.radio-specie {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 100000;
+}
+
+.specie-image {
+    background-clip: padding-box;
+    background-size: cover;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 4px;
+    box-shadow: none;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    background-position: 50%;
+    background-size: cover;
+    border-color: rgba(98, 63, 127, 0.1);
+}
+
+.specie-image:after {
+    background-color: #111;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    border-radius: 100%;
+    color: #fff;
+    content: " ";
+    height: 28px;
+    left: -7px;
+    opacity: 0;
+    position: absolute;
+    top: -7px;
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+    transition: all .2s ease-in;
+    width: 28px;
+    will-change: transform;
+}
+
+.radio-specie:checked~.specie-image:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+
+.specie-image:after {
+    background-color: #00abab;
+}
+
+.specie-image:after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 76.887 55.552'%3E%3Cpath fill='%23ffffff' d='M34.373 49.541L76.887 5.889 70.739 0 28.426 43.458 6.078 20.632 0 26.585l22.488 22.972 6.029 5.995-.091-.085.091.085 5.856-6.011z'/%3E%3C/svg%3E");
+}
+
+.specie-text {
+    font-weight: 400;
+    color: #025252;
+        font-size: 17px;
+            line-height: 1.1;
+    margin-bottom: 0;
+    margin-top: 12px;
+
+}
+
+.specie-list {
+    margin-top: 20px;
+        margin-bottom: 60px;
+}
+
+#constructor .wrp {
+    width: 960px;
+}
+
+.specie-inactive {
+    display: none;
+}
+
+.specie-categories {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.specie-categories .order-select-block {
+    width: 25%;
+}
