@@ -39,6 +39,15 @@
 					<li>
 						<a href="{% url 'delivery' %}" class="light">Оплата и доставка</a>
 					</li>
+					{% if request.user.is_authenticated %}
+						<li>
+							<a href="{% url 'profile' %}" class="light">Профиль</a>
+						</li>
+					{% else %}
+						<li>
+							<a href="{% url 'login' %}" class="light">Авторизация</a>
+						</li>
+					{% endif %}
 				</ul>
 			</div>
 			<div class="header-center">
@@ -84,11 +93,6 @@
 
 	{% block content%}
 	{% endblock content%}
-
-	<footer id="footer">
-		<div class="wrp">
-		</div>
-	</footer>
 
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
