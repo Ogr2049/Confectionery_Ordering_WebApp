@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from products.mixins import CartMixin
 from . import models
+from utils.parse_excel import parse_products
 
 class IndexView(CartMixin, View):
 
@@ -131,7 +132,7 @@ class ConstructorView(CartMixin, View):
             for ing in floor.ingredients.all():
                 sostav += f"{ing.title}. Стоимость: {ing.price} р.<br><br>"
         send_mail(
-            f"Новый заказ на торт на сайте Pie&Cake!",
+            f"Новый заказ на торт на сайте Cake&Pie!",
             "",
             'robot@cake-pie-store.ru',
             ["lautariano777@gmail.com", "o.grigoriev2@yandex.ru"],

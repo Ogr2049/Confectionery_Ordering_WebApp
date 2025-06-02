@@ -849,7 +849,7 @@ a {
 }
 
 .product-photo {
-    width: 570px;
+    width: 450px;
     height: 570px;
     position: relative;
     display: flex;
@@ -1458,11 +1458,8 @@ a {
 
 .receipt-description {
     margin-top: 40px;
+    width: 100%;
     margin-bottom: 40px;
-}
-
-.receipt-description p {
-    margin: 0;
 }
 
 .specie-items {

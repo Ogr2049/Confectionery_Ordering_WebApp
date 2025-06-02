@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load main_tags %}
-{% block title %}Pie&Cake - Личный кабинет{% endblock title %}
+{% block title %}Cake&Pie - Личный кабинет{% endblock title %}
 
 {% block content %}
 	<section id="breadcrumbs">
@@ -38,7 +38,7 @@
 					<div style="display: flex; flex-direction: column">
 						{% csrf_token %}
 						<div class="input-label">
-							<p>ФИО</p>
+							<p>Имя и Фамилия</p>
 							<input type="text" class="input" value="{{ request.user.full_name }}" name="full_name">
 						</div>
 						<div class="input-label">

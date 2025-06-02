@@ -5,7 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>
-		Pie&Cake - Регистрация
+		Cake&Pie - Регистрация
 	</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +24,7 @@
 	</section>
 
 	<section class="main-login">
-		<p class="h2" style="text-align: center;">Регистрация кабинета</p>
+		<p class="h2" style="text-align: center;">Регистрация</p>
 		<div>
                         {% for field in form %}
                             {% if field.errors %}
@@ -35,7 +35,7 @@
                         {% endfor %}
 				<form method="post" enctype="multipart/form-data">{% csrf_token %}
 				<div class="input-label">
-					<p>ФИО</p>
+					<p>Имя и Фамилия</p>
 					<input type="text" class="input required" name="full_name" required>
 				</div>
 
@@ -67,10 +67,6 @@
 							<a href="{% url 'login' %}">Вход</a>
 						</p>
 					</div>
-					<p>
-						Нажимая на кнопку, вы принимаете условия<br>
-						пользовательского соглашения
-					</p>
 				</div>
 					</form>
 

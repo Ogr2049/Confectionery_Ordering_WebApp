@@ -203,7 +203,7 @@ class OrderView(CartMixin, View):
         for cart_product in new_order.products.all():
             sostav += f"{cart_product.product.title} {cart_product.quantity} шт. Стоимость: {cart_product.total_price} р.<br>"
         send_mail(
-            f"Новый заказ на сайте Pie&Cake!",
+            f"Новый заказ на сайте Cake&Pie!",
             "",
             'robot@cake-pie-store.ru',
             ["lautariano777@gmail.com", "o.grigoriev2@yandex.ru"],
@@ -213,8 +213,8 @@ class OrderView(CartMixin, View):
                                             Данные клиента:<br>
                                             Имя: {new_order.full_name}<br>
                                             Номер телефона: {new_order.phone}<br>
-                                            Почта: {new_order.email}<br<br>
-                                            <b>Информая о заказе:</b><br>
+                                            Почта: {new_order.email}<br><br>
+                                            <b>Информация о заказе:</b><br>
                                             Стоимость: <b>{new_order.amount} рублей</b><br>
                                             {new_order.delivery}<br>
                                             Способ оплаты: {new_order.get_type_pay_display()}<br>

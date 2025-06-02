@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% load main_tags %}
+
+{% block title %}Подтвердите почту - Cake&Pie{% endblock title %}
+
+{% block content %}
+<section id="code">
+    <div class="wrp">
+        <h1 class="h2">Подтвердите почту</h1>
+        <form method="post" enctype="multipart/form-data"> {% csrf_token %}
+            <input type="text" class="input" placeholder="Верификационный код" name="code" style="margin-top: 20px;">
+            <input type="submit" class="blue-button br-10" value="Подтвердить" style="margin-top: 20px;">
+        </form>
+    </div>
+</section>
+{% endblock content %}
