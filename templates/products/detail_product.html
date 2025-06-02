@@ -2,7 +2,7 @@
 {% load static %}
 {% load main_tags %}
 
-{% block title %} {{ product.title }} - Cake&Pie {% endblock title %}
+{% block title %} {{ product.title }} - Pie&Cake {% endblock title %}
 
 {% block no-header %}no-margin-b{% endblock no-header %}
 {% block content %}
@@ -27,7 +27,7 @@
 	{% get_cart request=request as cart %}
 	<div id="product-detail">
 		<div class="wrp">
-				<img class="product-photo br-15" style="height: 450px; object-fit: contain;" src='{{ product.image.url }}' alt="{{ product.title }}">
+				<img class="product-photo br-15" style="height: 570px; object-fit: contain;" src='{{ product.image.url }}' alt="{{ product.title }}">
 				<div class="product-desc-card br-15">
 					<h1 class="h2">{{ product.title }}<br> {{ product.weight }}</h1>
 					<div class="info">
