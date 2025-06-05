@@ -77,20 +77,6 @@ class EditReceiptView(CartMixin, View):
         receipt.save()
         return redirect("receipts")
 
-def update_like(request):
-    receipt = models.Receipt.objects.get(id=request.POST.get("receipt_id"))
-    for like in receipt.likes.all():
-        if like.user == request.user:
-            receipt.likes.remove(like)
-            receipt.save()
-            return JsonResponse({"likes_count": receipt.likes.count()})
-    new_like = models.Like.objects.create(user=request.user)
-    new_like.save()
-    receipt.likes.add(new_like)
-    receipt.save()
-    print(new_like)
-    return JsonResponse({"likes_count": receipt.likes.count()})
-
 class ConstructorView(CartMixin, View):
 
     def get(self, request, *args, **kwargs):

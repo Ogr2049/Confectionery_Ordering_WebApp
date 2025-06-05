@@ -2,18 +2,13 @@ from django.db import models
 from utils.utils import russian_to_engilsh
 from django.db import models
 from mptt.fields import TreeForeignKey
-from mptt.models import MPTTModel
 
-class Category(MPTTModel):
+class Category(models.Model):
 
     title = models.CharField(max_length=150,verbose_name='Название')
     slug = models.SlugField(max_length=200,blank=True,verbose_name='URL')
     parent = TreeForeignKey('self',on_delete=models.CASCADE,null=True,blank=True,related_name='children',db_index=True,verbose_name='Родитель')
     show_main = models.BooleanField(verbose_name="Разместить на главной", default=False)
-
-    class MPTTMeta:
-        parent_attr = 'parent'
-        order_insertion_by = ['title']
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -79,13 +74,6 @@ class Cart(models.Model):
     class Meta:
         verbose_name = "Корзина"
         verbose_name_plural = "Корзины"
-
-
-TYPE_PAY = (
-    ("online", "Оплата онлайн"),
-    ("cash", "Оплата при получении"),
-)
-
 
 class Delivery(models.Model):
 

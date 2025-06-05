@@ -13,18 +13,6 @@ def order_catalog(request):
     return JsonResponse({"products": [{"slug": product.slug, "image": product.image.url, "title": product.title, "id": product.id,
                                        "price": product.price, 'weight': product.weight} for product in products]})
 
-class CatalogView(CartMixin, View):
-
-    def get(self, request, *args, **kwargs):
-        products = models.Product.objects.all()
-        category = None
-        if "category" in request.GET.keys():
-            category = models.Category.objects.get(slug=request.GET.get("category"))
-            products = products.filter(category=category)
-        if "q" in request.GET.keys():
-            products = products.filter(title__icontains=request.GET.get("q"))
-        return render(request, "products/catalog.html", {"products": products, "category": category})
-
 class ProductDetailView(CartMixin, View):
 
     def get(self, request, *args, **kwargs):
