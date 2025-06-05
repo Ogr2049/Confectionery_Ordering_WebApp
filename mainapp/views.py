@@ -59,6 +59,24 @@ class DeleteReceiptView(CartMixin, View):
             receipt.delete()
         return redirect("receipts")
 
+class EditReceiptView(CartMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        receipt = models.Receipt.objects.get(id=kwargs.get("id"))
+        if receipt.author != request.user:
+            return redirect("receipts")
+        return render(request, "mainapp/edit_receipt.html", {"receipt": receipt})
+
+    def post(self, request, *args, **kwargs):
+        receipt = models.Receipt.objects.get(id=kwargs.get("id"))
+        data = request.POST
+        receipt.title=data.get("title")
+        if "cover" in request.FILES.keys():
+            receipt.cover=request.FILES.get("cover")
+        receipt.description=data.get("description")
+        receipt.save()
+        return redirect("receipts")
+
 def update_like(request):
     receipt = models.Receipt.objects.get(id=request.POST.get("receipt_id"))
     for like in receipt.likes.all():
