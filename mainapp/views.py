@@ -77,6 +77,20 @@ class EditReceiptView(CartMixin, View):
         receipt.save()
         return redirect("receipts")
 
+def update_like(request):
+    receipt = models.Receipt.objects.get(id=request.POST.get("receipt_id"))
+    for like in receipt.likes.all():
+        if like.user == request.user:
+            receipt.likes.remove(like)
+            receipt.save()
+            return JsonResponse({"likes_count": receipt.likes.count()})
+    new_like = models.Like.objects.create(user=request.user)
+    new_like.save()
+    receipt.likes.add(new_like)
+    receipt.save()
+    print(new_like)
+    return JsonResponse({"likes_count": receipt.likes.count()})
+
 class ConstructorView(CartMixin, View):
 
     def get(self, request, *args, **kwargs):
@@ -95,16 +109,14 @@ class ConstructorView(CartMixin, View):
                     continue
 
                 new_floor = models.Floor.objects.create(floor=int(key.split("-")[-1]))
-                for ing_id in data.getlist(key):
-                    ingredient_default = models.Ingredient.objects.get(id=int(ing_id))
-                    new_floor.ingredients.add(ingredient_default)
-                    new_cake.amount += ingredient_default.price
+                ingredient_default = models.Ingredient.objects.get(id=int(data.get(key)))
+                new_floor.ingredients.add(ingredient_default)
+                new_cake.amount += ingredient_default.price
                 for k,v in data.items():
                     if k.split("-")[0] == "floor" and int(k.split("-")[-1]) == new_floor.floor and v != value:
-                        for ing_id in data.getlist(k):
-                            ing = models.Ingredient.objects.get(id=int(ing_id))
-                            new_floor.ingredients.add(ing)
-                            new_cake.amount += ing.price
+                        ing = models.Ingredient.objects.get(id=data.get(k))
+                        new_floor.ingredients.add(ing)
+                        new_cake.amount += ing.price
                 new_floor.save()
                 new_cake.floors.add(new_floor)
 
