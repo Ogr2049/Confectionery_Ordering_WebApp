@@ -68,6 +68,17 @@ class Floor(models.Model):
         verbose_name_plural="Ярусы торта"
 
 
+TYPE_CAKE = (
+    ("one", "Одноярусный"),
+    ("more", "Ярусный"),
+)
+
+FORM_CAKE = (
+    ("circle", "Круг"),
+    ("hexagon", "Шестигранник"),
+    ("square", "Квадрат"),
+)
+
 class Cake(models.Model):
 
     full_name = models.CharField(verbose_name="ФИО", max_length=100, blank=True, null=True)
