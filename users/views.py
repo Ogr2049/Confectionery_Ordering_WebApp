@@ -77,6 +77,34 @@ class ProfileView(CartMixin, View):
         request.user.save()
         return redirect("profile")
 
+
+class CodeView(View):
+
+    def get(self, request, *args, **kwargs):
+        user = models.User.objects.get(id=kwargs.get("id"))
+        send_mail(
+            f"Подтверждение регистрации на сайте Cake&Pie",
+            "",
+            'robot@cake-pie-store.ru',
+            [user.email],
+            html_message=f'''
+                                                <p><b>Ваш верификационный код:</b><br>
+                                                    <br>
+                                                    Код: <b>095798</b><br>
+
+                                                </p>
+                                              '''
+        )
+        return render(request, "users/code.html", {"user": user})
+
+    def post(self, request, *args, **kwargs):
+        user = models.User.objects.get(id=kwargs.get("id"))
+        if request.POST.get("code") == "095798":
+            user = authenticate(email=user.email, password=user.password)
+            login(request, user)
+            return redirect("profile")
+        return render(request, "users/code.html", {"user": user, "error": True})
+
 class MyOrdersView(CartMixin, View):
 
     def get(self, request, *args, **kwargs):
